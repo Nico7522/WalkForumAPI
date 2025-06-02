@@ -1,0 +1,14 @@
+@WalkForum.API_HostAddress = https://localhost:7227
+
+GET {{WalkForum.API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
+
+GET {{WalkForum.API_HostAddress}}/api/posts?category=Discussion
+
+###
+
+GET {{WalkForum.API_HostAddress}}/api/posts/1
+
+###

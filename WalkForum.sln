@@ -1,0 +1,40 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.12.35707.178 d17.12
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WalkForum.API", "WalkForum.API\WalkForum.API.csproj", "{9977770B-9389-4A70-A36F-898A14C42662}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WalkForum.Domain", "WalkForum.Domain\WalkForum.Domain.csproj", "{65152245-325E-4B52-9C3F-8696BCE45E1D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WalkForum.Application", "WalkForum.Application\WalkForum.Application.csproj", "{600A7D74-109F-4B05-9E1B-221C4C2B14FC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WalkForum.Infrastructure", "WalkForum.Infrastructure\WalkForum.Infrastructure.csproj", "{3DC4AC39-A1F5-46EE-93EC-2D301B26C54C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9977770B-9389-4A70-A36F-898A14C42662}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9977770B-9389-4A70-A36F-898A14C42662}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9977770B-9389-4A70-A36F-898A14C42662}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9977770B-9389-4A70-A36F-898A14C42662}.Release|Any CPU.Build.0 = Release|Any CPU
+		{65152245-325E-4B52-9C3F-8696BCE45E1D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{65152245-325E-4B52-9C3F-8696BCE45E1D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{65152245-325E-4B52-9C3F-8696BCE45E1D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{65152245-325E-4B52-9C3F-8696BCE45E1D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{600A7D74-109F-4B05-9E1B-221C4C2B14FC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{600A7D74-109F-4B05-9E1B-221C4C2B14FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{600A7D74-109F-4B05-9E1B-221C4C2B14FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{600A7D74-109F-4B05-9E1B-221C4C2B14FC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3DC4AC39-A1F5-46EE-93EC-2D301B26C54C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3DC4AC39-A1F5-46EE-93EC-2D301B26C54C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3DC4AC39-A1F5-46EE-93EC-2D301B26C54C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3DC4AC39-A1F5-46EE-93EC-2D301B26C54C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
