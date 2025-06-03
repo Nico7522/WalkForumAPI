@@ -5,10 +5,20 @@ Accept: application/json
 
 ###
 
-GET {{WalkForum.API_HostAddress}}/api/posts?category=Discussion
+GET {{WalkForum.API_HostAddress}}/api/posts?category=Nutrition
 
 ###
 
-GET {{WalkForum.API_HostAddress}}/api/posts/1
+GET {{WalkForum.API_HostAddress}}/api/posts/9
 
 ###
+
+POST {{WalkForum.API_HostAddress}}/api/posts
+Content-Type: application/json
+
+{
+  "Title" : "v",
+  "Content" : "",
+  "AuthorId": 1,
+  "CategoryId": 3
+}

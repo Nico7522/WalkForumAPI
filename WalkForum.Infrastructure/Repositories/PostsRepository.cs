@@ -7,6 +7,13 @@ namespace WalkForum.Infrastructure.Repositories;
 
 internal class PostsRepository(ForumDbContext dbContext) : IPostsRepository
 {
+    public async Task<int> Create(Post entity)
+    {
+        dbContext.Posts.Add(entity);
+        await dbContext.SaveChangesAsync();
+        return entity.Id;
+    }
+
     public async Task<IEnumerable<Post>> GetAllPosts(string category)
     {
        var posts = await dbContext.Posts

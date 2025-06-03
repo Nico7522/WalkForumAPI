@@ -1,4 +1,4 @@
-﻿namespace WalkForum.Application.Categories;
+﻿namespace WalkForum.Application.Categories.Dtos;
 
 public class CategoryDto
 {
