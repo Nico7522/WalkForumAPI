@@ -11,8 +11,8 @@ public class PostDto
     public int Id { get; set; }
     public string Title { get; set; } = default!;
     public string Content { get; set; } = default!;
-    public DateOnly CreationDate { get; set; }
-    public DateOnly UpdateDate { get; set; }
+    public DateTime CreationDate { get; set; }
+    public DateTime UpdateDate { get; set; }
 
     public CategoryDto Category { get; set; } = default!;
 

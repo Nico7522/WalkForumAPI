@@ -5,11 +5,11 @@ Accept: application/json
 
 ###
 
-GET {{WalkForum.API_HostAddress}}/api/posts?category=Nutrition
+GET {{WalkForum.API_HostAddress}}/api/posts?category=Carnets%20de%20marche
 
 ###
 
-GET {{WalkForum.API_HostAddress}}/api/posts/9
+GET {{WalkForum.API_HostAddress}}/api/posts/12
 
 ###
 
@@ -17,8 +17,22 @@ POST {{WalkForum.API_HostAddress}}/api/posts
 Content-Type: application/json
 
 {
-  "Title" : "v",
-  "Content" : "",
+  "Title" : "Test création2",
+  "Content" : "testtest",
   "AuthorId": 1,
   "CategoryId": 3
+}
+
+###
+
+DELETE {{WalkForum.API_HostAddress}}/api/posts/8
+
+###
+
+PATCH {{WalkForum.API_HostAddress}}/api/posts/12
+Content-Type: application/json
+
+{
+  "Title" : "modif de la 12",
+  "Content" : "je modifie la 12"
 }

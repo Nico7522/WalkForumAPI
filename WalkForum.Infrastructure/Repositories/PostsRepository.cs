@@ -14,7 +14,14 @@ internal class PostsRepository(ForumDbContext dbContext) : IPostsRepository
         return entity.Id;
     }
 
-    public async Task<IEnumerable<Post>> GetAllPosts(string category)
+    public async Task<bool> Delete(Post entity)
+    {
+        dbContext.Remove(entity);
+        await dbContext.SaveChangesAsync();
+        return true;
+    }
+
+    public async Task<IEnumerable<Post>> GetAll(string category)
     {
        var posts = await dbContext.Posts
             .Include(p => p.Author)
@@ -24,7 +31,7 @@ internal class PostsRepository(ForumDbContext dbContext) : IPostsRepository
        return posts;
     }
 
-    public async Task<Post?> GetPost(int id)
+    public async Task<Post?> GetById(int id)
     {
         var post = await dbContext.Posts
             .Include(p => p.Category)
@@ -32,4 +39,7 @@ internal class PostsRepository(ForumDbContext dbContext) : IPostsRepository
             .FirstOrDefaultAsync(p => p.Id == id);
         return post;
     }
+
+    public async Task SaveChanges()
+     => await dbContext.SaveChangesAsync();
 }

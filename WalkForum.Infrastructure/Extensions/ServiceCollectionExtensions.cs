@@ -18,5 +18,6 @@ public static class ServiceCollectionExtensions
         services.AddScoped<ICategorySeeder, CategorySeeder>();
         services.AddScoped<ITagSeeder, TagSeeder>();
         services.AddScoped<IPostsRepository, PostsRepository>();
+        services.AddScoped<ICategoryRepository, CategoryRepository>();
     }
 }

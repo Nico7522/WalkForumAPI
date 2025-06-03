@@ -11,7 +11,7 @@ public class GetPostByIdQueryHandler(IPostsRepository postsRepository, IMapper m
 {
     public async Task<PostDto?> Handle(GetPostByIdQuery request, CancellationToken cancellationToken)
     {
-        var post = await postsRepository.GetPost(request.Id);
+        var post = await postsRepository.GetById(request.Id);
         if (post is not null) return mapper.Map<PostDto?>(post);
 
 
