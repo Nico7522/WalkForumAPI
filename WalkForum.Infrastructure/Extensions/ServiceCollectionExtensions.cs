@@ -13,7 +13,7 @@ public static class ServiceCollectionExtensions
     public static void AddInfrastructure(this IServiceCollection services, IConfiguration configuration) 
     {   
         var connectionString = configuration.GetSection("ConnectionString")["WalkForumDB"];
-        services.AddDbContext<ForumDbContext>(options => options.UseNpgsql(connectionString));
+        services.AddDbContext<ForumDbContext>(options => options.UseNpgsql(connectionString).EnableSensitiveDataLogging());
 
         services.AddScoped<ICategorySeeder, CategorySeeder>();
         services.AddScoped<ITagSeeder, TagSeeder>();

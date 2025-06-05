@@ -9,7 +9,7 @@ GET {{WalkForum.API_HostAddress}}/api/posts?category=Carnets%20de%20marche
 
 ###
 
-GET {{WalkForum.API_HostAddress}}/api/posts/12
+GET {{WalkForum.API_HostAddress}}/api/posts/17
 
 ###
 
@@ -17,7 +17,7 @@ POST {{WalkForum.API_HostAddress}}/api/posts
 Content-Type: application/json
 
 {
-  "Title" : "Test création2",
+  "Title" : "T",
   "Content" : "testtest",
   "AuthorId": 1,
   "CategoryId": 3
@@ -25,7 +25,7 @@ Content-Type: application/json
 
 ###
 
-DELETE {{WalkForum.API_HostAddress}}/api/posts/8
+DELETE {{WalkForum.API_HostAddress}}/api/posts/12
 
 ###
 

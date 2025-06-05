@@ -3,7 +3,7 @@ using MediatR;
 
 namespace WalkForum.Application.Posts.Commands.UpdatePost;
 
-public class UpdatePostCommand : IRequest<bool>
+public class UpdatePostCommand : IRequest
 {
     public int Id { get; set; }
     public string Title { get; set; } = default!;
