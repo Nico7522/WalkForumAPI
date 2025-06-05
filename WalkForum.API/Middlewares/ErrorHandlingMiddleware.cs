@@ -13,7 +13,7 @@ public class ErrorHandlingMiddleware(ILogger<ErrorHandlingMiddleware> logger) : 
             logger.LogInformation("Try");
             await next.Invoke(context);
         }
-        catch(BadRequestException e)
+        catch(NotFoundException e)
         {
             logger.LogInformation("Catch Bad Request");
             context.Response.ContentType = MediaTypeNames.Application.Json;

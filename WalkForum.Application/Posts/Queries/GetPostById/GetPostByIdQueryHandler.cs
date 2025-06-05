@@ -14,7 +14,7 @@ public class GetPostByIdQueryHandler(IPostsRepository postsRepository, IMapper m
     {
         logger.LogInformation("Getting post with ID {postId}", request.Id);
         var post = await postsRepository.GetById(request.Id);
-        if (post is null) throw new BadRequestException("Post not found");
+        if (post is null) throw new NotFoundException("Post not found");
 
         return mapper.Map<PostDto>(post);
 
