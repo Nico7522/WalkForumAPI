@@ -9,6 +9,6 @@ GET {{WalkForum.API_HostAddress}}/api/posts?category=Discussion
 
 ###
 
-GET {{WalkForum.API_HostAddress}}/api/posts/1
+GET {{WalkForum.API_HostAddress}}/api/posts/17
 
 ###
