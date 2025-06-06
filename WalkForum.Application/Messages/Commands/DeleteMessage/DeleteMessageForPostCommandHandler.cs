@@ -15,7 +15,6 @@ public class DeleteMessageForPostCommandHandler(ILogger<DeleteMessageForPostComm
     {
        logger.LogWarning("Removing message with id {messageId}, from post with id {postId}", request.MessageId, request.PostId);
 
-
         var post = await postsRepository.GetById(request.PostId);
         if (post is null) throw new NotFoundException("Post not found");
 
