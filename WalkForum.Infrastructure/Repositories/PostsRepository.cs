@@ -36,6 +36,7 @@ internal class PostsRepository(ForumDbContext dbContext) : IPostsRepository
         var post = await dbContext.Posts
             .Include(p => p.Category)
             .Include(p => p.Author)
+            .Include(p => p.Messages)
             .FirstOrDefaultAsync(p => p.Id == id);
         return post;
     }

@@ -1,4 +1,6 @@
 using Serilog;
+using System.Text.Json.Serialization;
+using System.Text.Json;
 using WalkForum.API.Middlewares;
 using WalkForum.Application.Extensions;
 using WalkForum.Infrastructure.Extensions;
@@ -8,6 +10,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddScoped<ErrorHandlingMiddleware>();
 builder.Services.AddControllers();
+
 builder.Services.AddSwaggerGen();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();

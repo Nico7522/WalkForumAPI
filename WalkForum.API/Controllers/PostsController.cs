@@ -16,43 +16,22 @@ public class PostsController(IMediator mediator) : ControllerBase
     [HttpGet]
     public async Task<ActionResult<IEnumerable<PostDto>>> GetAll([FromQuery] string category)
     {
-        try
-        {
             var posts = await mediator.Send(new GetAllPostsQuery(category));
             return Ok(posts);
-
-        }
-        catch (Exception ex)
-        {
-            return BadRequest(ex.Message);
-        }
     }
 
     [HttpGet("{id}")]
     public async Task<ActionResult<PostDto?>> GetById([FromRoute]int id)
     {
-        try
-        {
         var post = await mediator.Send(new GetPostByIdQuery(id));
         return Ok(post);
-
-        }
-        catch (BadRequestException ex) { 
-            return BadRequest(ex.Message);
-        }
     }
 
     [HttpPost]
     public async Task<IActionResult> Create([FromBody] CreatePostCommand createPostCommand)
     {
-
         int id = await mediator.Send(createPostCommand);
         return CreatedAtAction(nameof(GetById), new { id }, null);
-
-        //catch (ValidationException e)
-        //{
-        //    return BadRequest(new { Message = e.Message, Errors = e.Errors });
-        //}
     }
 
     [HttpDelete("{id}")]
@@ -63,24 +42,16 @@ public class PostsController(IMediator mediator) : ControllerBase
     {
         await mediator.Send(new DeletePostCommand(id));
         return NoContent();
-
     }
 
     [HttpPatch("{id}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> Update(UpdatePostCommand updatePostCommand, [FromRoute] int id) {
-        try
-        {
-            updatePostCommand.Id = id;
-             await mediator.Send(updatePostCommand);
 
-            return NoContent();
-        }
-        catch (ValidationException e)
-        {
+        updatePostCommand.Id = id;
+        await mediator.Send(updatePostCommand);
 
-            return BadRequest(new { Message = e.Message, Errors = e.Errors });
-        }
+        return NoContent();
     }
 }

@@ -1,6 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using System.Text.Json.Serialization;
+using System.Text.Json;
 using WalkForum.Domain.Repositories;
 using WalkForum.Infrastructure.Persistance;
 using WalkForum.Infrastructure.Repositories;
@@ -14,10 +16,11 @@ public static class ServiceCollectionExtensions
     {   
         var connectionString = configuration.GetSection("ConnectionString")["WalkForumDB"];
         services.AddDbContext<ForumDbContext>(options => options.UseNpgsql(connectionString).EnableSensitiveDataLogging());
-
+  
         services.AddScoped<ICategorySeeder, CategorySeeder>();
         services.AddScoped<ITagSeeder, TagSeeder>();
         services.AddScoped<IPostsRepository, PostsRepository>();
         services.AddScoped<ICategoryRepository, CategoryRepository>();
+        services.AddScoped<IMessagesRepository, MessagesRepository>();  
     }
 }

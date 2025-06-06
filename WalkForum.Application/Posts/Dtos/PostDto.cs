@@ -1,5 +1,6 @@
 ﻿using WalkForum.Application.Categories.Dtos;
 using WalkForum.Application.Messages;
+using WalkForum.Application.Messages.Dtos;
 using WalkForum.Application.Tags;
 using WalkForum.Application.Users.Dtos;
 using WalkForum.Domain.Entities;
