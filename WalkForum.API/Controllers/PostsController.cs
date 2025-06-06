@@ -21,7 +21,7 @@ public class PostsController(IMediator mediator) : ControllerBase
     }
 
     [HttpGet("{id}")]
-    public async Task<ActionResult<PostDto?>> GetById([FromRoute]int id)
+    public async Task<ActionResult<PostDto>> GetById([FromRoute]int id)
     {
         var post = await mediator.Send(new GetPostByIdQuery(id));
         return Ok(post);

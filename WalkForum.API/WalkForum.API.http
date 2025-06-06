@@ -25,7 +25,7 @@ Content-Type: application/json
 
 ###
 
-DELETE {{WalkForum.API_HostAddress}}/api/posts/1255gf
+DELETE {{WalkForum.API_HostAddress}}/api/posts/1255
 
 ###
 
