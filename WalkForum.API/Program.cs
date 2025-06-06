@@ -8,7 +8,7 @@ using WalkForum.Infrastructure.Seeders;
 var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
-builder.Services.AddScoped<ErrorHandlingMiddleware>();
+//builder.Services.AddTransient<ExceptionMiddleware>();
 builder.Services.AddControllers();
 
 builder.Services.AddSwaggerGen();
@@ -21,6 +21,7 @@ builder.Host.UseSerilog((context, configuration) =>
 {
     configuration.ReadFrom.Configuration(context.Configuration);
 });
+builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
 var app = builder.Build();
 
 var scope = app.Services.CreateScope();
@@ -41,8 +42,8 @@ if (app.Environment.IsDevelopment())
     app.MapOpenApi();
 }
 
-app.UseMiddleware<ErrorHandlingMiddleware>();
-
+//app.UseMiddleware<ExceptionMiddleware>();
+app.UseExceptionHandler(_ => { });
 app.UseHttpsRedirection();
 
 app.UseAuthorization();

@@ -5,7 +5,7 @@ using WalkForum.Domain.Exceptions;
 
 namespace WalkForum.API.Middlewares;
 
-public class ErrorHandlingMiddleware(ILogger<ErrorHandlingMiddleware> logger) : IMiddleware
+public class ExceptionMiddleware(ILogger<ExceptionMiddleware> logger) : IMiddleware
 {
     public async Task InvokeAsync(HttpContext context, RequestDelegate next)
     {
@@ -32,6 +32,12 @@ public class ErrorHandlingMiddleware(ILogger<ErrorHandlingMiddleware> logger) : 
             logger.LogInformation("Catch Validation exception");
             context.Response.StatusCode = StatusCodes.Status400BadRequest;
             await context.Response.WriteAsync(JsonSerializer.Serialize(new { Message = e.Message, Erros = e.Errors }));
+        }
+        catch(UnauthorizedException e)
+        {
+            logger.LogInformation("Catch Unauthorized exception");
+            context.Response.StatusCode = StatusCodes.Status401Unauthorized;
+            await context.Response.WriteAsync(JsonSerializer.Serialize(e.Message));
         }
 
     }
