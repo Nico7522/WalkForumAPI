@@ -11,7 +11,7 @@ public class Post
     public int CategoryId { get; set; }
     public Category Category { get; set; } = default!;
 
-    public int AuthorId { get; set; }
+    public int AuthorId { get; set; } = default!;
     public User Author { get; set; } = default!;
 
     public List<Tag> Tags { get; set; } = new();

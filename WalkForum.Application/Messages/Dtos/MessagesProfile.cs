@@ -13,8 +13,8 @@ public class MessagesProfile : Profile
         CreateMap<CreateMessageCommand, Message>();
 
         CreateMap<Message, MessageDto>()
-            .ForMember(msg => msg.UserId, opt => opt.MapFrom(src => src.UserId))
-            .ForMember(msg => msg.Username, opt => opt.MapFrom(src => src.User.Username));
+            .ForMember(msg => msg.UserId, opt => opt.MapFrom(src => src.UserId));
+            //.ForMember(msg => msg.Username, opt => opt.MapFrom(src => src.User.UserName));
 
     }
 }

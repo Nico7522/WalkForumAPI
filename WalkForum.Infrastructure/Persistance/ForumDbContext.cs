@@ -1,18 +1,21 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using WalkForum.Domain.Entities;
 
 namespace WalkForum.Infrastructure.Persistance;
 
-internal class ForumDbContext(DbContextOptions<ForumDbContext> options) : DbContext(options)
+internal class ForumDbContext(DbContextOptions<ForumDbContext> options) : IdentityDbContext<User, IdentityRole<int>, int>(options)
 {
     internal DbSet<Post> Posts { get; set; }
     internal DbSet<Tag> Tags { get; set; }
     internal DbSet<Message> Messages { get; set; }
     internal DbSet<Category> Categories { get; set; }
-    internal DbSet<User> Users { get; set; }
+    //internal DbSet<User> Users { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        base.OnModelCreating(modelBuilder);
         modelBuilder.Entity<Category>()
             .HasMany(e => e.Posts)
             .WithOne(e => e.Category)

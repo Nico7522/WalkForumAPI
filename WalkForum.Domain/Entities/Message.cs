@@ -9,7 +9,7 @@ public class Message
     public DateTime UpdateDate { get; set; }
 
 
-    public int UserId { get; set; }
+    public int UserId { get; set; } = default!;
     public User User { get; set; } = default!;
 
     public int PostId  { get; set; }
