@@ -1,6 +1,6 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using WalkForum.Application.Users.Commands;
+using WalkForum.Application.Users.Commands.Register;
 
 namespace WalkForum.API.Controllers;
 

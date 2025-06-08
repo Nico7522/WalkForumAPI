@@ -24,9 +24,13 @@ internal class RoleSeeder(ForumDbContext dbContext) : IRoleSeeder
     private IEnumerable<IdentityRole<int>> getRoles()
     {
         List<IdentityRole<int>> roles = [
-            new (UserRoles.User),
-            new (UserRoles.Moderator),
-            new (UserRoles.Administrator),
+            new (UserRoles.User) {
+                NormalizedName = UserRoles.User.ToUpper()
+            },
+            new (UserRoles.Moderator) {
+                NormalizedName = UserRoles.Moderator.ToUpper()
+            },
+            new (UserRoles.Administrator) { NormalizedName = UserRoles.Administrator.ToUpper() },
             ];
 
         return roles;

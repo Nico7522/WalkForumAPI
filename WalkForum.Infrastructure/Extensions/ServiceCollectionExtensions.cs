@@ -17,7 +17,7 @@ public static class ServiceCollectionExtensions
     {   
         var connectionString = configuration.GetSection("ConnectionString")["WalkForumDB"];
         services.AddDbContext<ForumDbContext>(options => options.UseNpgsql(connectionString).EnableSensitiveDataLogging());
-        services.AddIdentityCore<User>().AddRoles<IdentityRole>().AddEntityFrameworkStores<ForumDbContext>().AddDefaultUI();
+        services.AddIdentityCore<User>().AddRoles<IdentityRole<int>>().AddEntityFrameworkStores<ForumDbContext>().AddDefaultUI();
 
         services.AddScoped<ICategorySeeder, CategorySeeder>();
         services.AddScoped<ITagSeeder, TagSeeder>();

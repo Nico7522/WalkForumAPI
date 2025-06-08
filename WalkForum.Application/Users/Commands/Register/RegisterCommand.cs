@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace WalkForum.Application.Users.Commands;
+namespace WalkForum.Application.Users.Commands.Register;
 
 public class RegisterCommand(string name, string surname, string username, string email, string password, string passwordConfirm) : IRequest
 {
