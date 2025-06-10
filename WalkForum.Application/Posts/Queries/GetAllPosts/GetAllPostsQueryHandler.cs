@@ -13,11 +13,7 @@ internal class GetAllPostsQueryHandler(IPostsRepository postsRepository, IMapper
 {
     public async Task<IEnumerable<PostDto>> Handle(GetAllPostsQuery request, CancellationToken cancellationToken)
     {
-        var validation = await validator.ValidateAsync(request);
-        if(!validation.IsValid)
-        {
-            throw new Exception(validation.Errors.First().ErrorMessage);
-        }
+        await Helpers.Helpers.ValidFormAsync(request, validator);
         var posts = await postsRepository.GetAll(request.Category);
         var postsDto = mapper.Map<IEnumerable<PostDto>>(posts);
         return postsDto;

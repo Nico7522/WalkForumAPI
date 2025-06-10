@@ -16,6 +16,7 @@ public class PostsController(IMediator mediator) : ControllerBase
     [HttpGet]
     public async Task<ActionResult<IEnumerable<PostDto>>> GetAll([FromQuery] string category)
     {
+            var user = HttpContext.User;
             var posts = await mediator.Send(new GetAllPostsQuery(category));
             return Ok(posts);
     }

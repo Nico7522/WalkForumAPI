@@ -16,5 +16,7 @@ public class RegisterCommandHandler(UserManager<User> userManager, IMapper mappe
         await userManager.CreateAsync(userEntity, request.Password);
         
         await userManager.AddToRoleAsync(userEntity, UserRoles.User);
+
+   
     }
 }

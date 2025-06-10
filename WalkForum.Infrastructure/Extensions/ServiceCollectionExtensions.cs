@@ -8,6 +8,7 @@ using WalkForum.Infrastructure.Repositories;
 using WalkForum.Infrastructure.Seeders;
 using WalkForum.Domain.Entities;
 using Microsoft.AspNetCore.Identity;
+using WalkForum.Infrastructure.Authorization;
 
 namespace WalkForum.Infrastructure.Extensions;
 
@@ -17,8 +18,12 @@ public static class ServiceCollectionExtensions
     {   
         var connectionString = configuration.GetSection("ConnectionString")["WalkForumDB"];
         services.AddDbContext<ForumDbContext>(options => options.UseNpgsql(connectionString).EnableSensitiveDataLogging());
-        services.AddIdentityCore<User>().AddRoles<IdentityRole<int>>().AddEntityFrameworkStores<ForumDbContext>().AddDefaultUI();
+        services.AddIdentityApiEndpoints<User>(options =>
+        {
+            options.User.RequireUniqueEmail = true;
 
+        }).AddRoles<IdentityRole<int>>().AddClaimsPrincipalFactory<WalkForumUserClaimsPrincipalFactory>().AddEntityFrameworkStores<ForumDbContext>();
+          
         services.AddScoped<ICategorySeeder, CategorySeeder>();
         services.AddScoped<ITagSeeder, TagSeeder>();
         services.AddScoped<IRoleSeeder, RoleSeeder>();

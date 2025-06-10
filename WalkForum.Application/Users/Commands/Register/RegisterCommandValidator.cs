@@ -12,8 +12,8 @@ internal class RegisterCommandValidator :AbstractValidator<RegisterCommand>
         this._userManager = userManager;
         RuleFor(x => x.Name).NotEmpty();
         RuleFor(x => x.Surname).NotEmpty();
-        RuleFor(x => x.Password).Matches(@"^(?=.*[!@#=$%^&*(),.?"":{}|<>])(?=.*\d)(?=.*[A-Z]).{6,}$").NotEmpty();
-        RuleFor(x => x.PasswordConfirm).Matches(@"^(?=.*[!@#=$%^&*(),.?"":{}|<>])(?=.*\d)(?=.*[A-Z]).{6,}$").NotEmpty();
+        RuleFor(x => x.Password).Matches(@"^(?=.*[!@#=$%^&*(),.?"":{}|<>])(?=.*\d)(?=.*[A-Z]).{6,}$").WithMessage("Password not match the requirement").NotEmpty();
+        RuleFor(x => x.PasswordConfirm).Equal(x => x.Password).WithMessage("Password and password confirmation are not equal");
         RuleFor(x => x.Email).NotEmpty().WithMessage("Email is required").EmailAddress().WithMessage("Email format invalid").MustAsync(async (email, cancellation) =>
         {
             var user = await _userManager.FindByEmailAsync(email);

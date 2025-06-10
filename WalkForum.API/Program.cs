@@ -1,10 +1,7 @@
-using Microsoft.AspNetCore.Http.Features;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.DependencyInjection.Extensions;
-using Microsoft.OpenApi.Models;
+
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Serilog;
 using WalkForum.API.Extensions;
-using WalkForum.API.Middlewares;
 using WalkForum.Application.Extensions;
 using WalkForum.Domain.Entities;
 using WalkForum.Infrastructure.Extensions;
@@ -14,10 +11,11 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
+
 builder.AddPresentation();
+
 builder.Services.AddApplication();
 builder.Services.AddInfrastructure(builder.Configuration);
-
 var app = builder.Build();
 
 var scope = app.Services.CreateScope();
@@ -42,8 +40,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.MapGroup("api/identity").MapIdentityApi<User>();
-
+app.MapGroup("api/identity").WithTags("identity").MapIdentityApi<User>();
 app.UseAuthorization();
 
 app.MapControllers();

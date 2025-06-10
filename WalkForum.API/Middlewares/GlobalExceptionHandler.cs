@@ -52,8 +52,11 @@ internal sealed class GlobalExceptionHandler(IProblemDetailsService problemDetai
             };
             return await problemDetailsService.TryWriteAsync(new ProblemDetailsContext { HttpContext = httpContext, ProblemDetails = problemDetails});
         }
+        if(exception is Exception)
+        {
+            Console.WriteLine(exception.Message);
+        }
 
-        Console.WriteLine(exception);
             return false;
     }
 }

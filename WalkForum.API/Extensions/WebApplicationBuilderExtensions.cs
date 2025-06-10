@@ -1,5 +1,8 @@
-﻿using Microsoft.AspNetCore.Http.Features;
+﻿using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Http.Features;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
 using Serilog;
 using WalkForum.API.Middlewares;
