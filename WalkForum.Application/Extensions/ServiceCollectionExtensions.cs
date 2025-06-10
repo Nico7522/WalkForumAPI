@@ -1,7 +1,9 @@
 ﻿using FluentValidation;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 using WalkForum.Application.Posts;
 using WalkForum.Application.Users;
+using WalkForum.Domain.Entities;
 namespace WalkForum.Application.Extensions;
 
 public static class ServiceCollectionExtensions

@@ -9,6 +9,7 @@ using WalkForum.Infrastructure.Seeders;
 using WalkForum.Domain.Entities;
 using Microsoft.AspNetCore.Identity;
 using WalkForum.Infrastructure.Authorization;
+using WalkForum.Application.CustomSignInManager;
 
 namespace WalkForum.Infrastructure.Extensions;
 
@@ -22,8 +23,9 @@ public static class ServiceCollectionExtensions
         {
             options.User.RequireUniqueEmail = true;
 
-        }).AddRoles<IdentityRole<int>>().AddClaimsPrincipalFactory<WalkForumUserClaimsPrincipalFactory>().AddEntityFrameworkStores<ForumDbContext>();
-          
+        }).AddRoles<IdentityRole<int>>().AddClaimsPrincipalFactory<WalkForumUserClaimsPrincipalFactory>().AddEntityFrameworkStores<ForumDbContext>().AddSignInManager<CustomSignInManager>();
+        //services.AddScoped<SignInManager<User>, CustomSignInManager>();
+
         services.AddScoped<ICategorySeeder, CategorySeeder>();
         services.AddScoped<ITagSeeder, TagSeeder>();
         services.AddScoped<IRoleSeeder, RoleSeeder>();
