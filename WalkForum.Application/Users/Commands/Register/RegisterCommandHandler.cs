@@ -13,6 +13,8 @@ public class RegisterCommandHandler(UserManager<User> userManager, IMapper mappe
     {
         await Helpers.Helpers.ValidFormAsync<RegisterCommand>(request, validator);
         var userEntity = mapper.Map<User>(request);
+
+        userEntity.UserProfile = new UserProfile() { CreationDate = DateTime.Now, UpdateDate = DateTime.Now };
         await userManager.CreateAsync(userEntity, request.Password);
         
         await userManager.AddToRoleAsync(userEntity, UserRoles.User);

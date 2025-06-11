@@ -1,5 +1,6 @@
 
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Scalar.AspNetCore;
 using Serilog;
 using WalkForum.API.Extensions;
 using WalkForum.Application.Extensions;
@@ -36,6 +37,7 @@ app.UseExceptionHandler();
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
+    app.MapScalarApiReference();
 }
 
 app.UseHttpsRedirection();

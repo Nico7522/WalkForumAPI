@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using WalkForum.Infrastructure.Persistance;
@@ -11,9 +12,11 @@ using WalkForum.Infrastructure.Persistance;
 namespace WalkForum.Infrastructure.Migrations
 {
     [DbContext(typeof(ForumDbContext))]
-    partial class ForumDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250611143445_add_profile")]
+    partial class add_profile
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -169,21 +172,6 @@ namespace WalkForum.Infrastructure.Migrations
                     b.ToTable("PostTag");
                 });
 
-            modelBuilder.Entity("PrivateDiscussionUserProfile", b =>
-                {
-                    b.Property<int>("PrivateDiscussionsId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("UserProfilesId")
-                        .HasColumnType("integer");
-
-                    b.HasKey("PrivateDiscussionsId", "UserProfilesId");
-
-                    b.HasIndex("UserProfilesId");
-
-                    b.ToTable("PrivateDiscussionUserProfile");
-                });
-
             modelBuilder.Entity("WalkForum.Domain.Entities.Category", b =>
                 {
                     b.Property<int>("Id")
@@ -269,37 +257,6 @@ namespace WalkForum.Infrastructure.Migrations
                     b.HasIndex("CategoryId");
 
                     b.ToTable("Posts");
-                });
-
-            modelBuilder.Entity("WalkForum.Domain.Entities.PrivateDiscussion", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.HasKey("Id");
-
-                    b.ToTable("PrivateDiscussion");
-                });
-
-            modelBuilder.Entity("WalkForum.Domain.Entities.PrivateMessage", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("PrivateDiscussionId")
-                        .HasColumnType("integer");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("PrivateDiscussionId");
-
-                    b.ToTable("PrivateMessage");
                 });
 
             modelBuilder.Entity("WalkForum.Domain.Entities.Tag", b =>
@@ -488,21 +445,6 @@ namespace WalkForum.Infrastructure.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("PrivateDiscussionUserProfile", b =>
-                {
-                    b.HasOne("WalkForum.Domain.Entities.PrivateDiscussion", null)
-                        .WithMany()
-                        .HasForeignKey("PrivateDiscussionsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("WalkForum.Domain.Entities.UserProfile", null)
-                        .WithMany()
-                        .HasForeignKey("UserProfilesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("WalkForum.Domain.Entities.Message", b =>
                 {
                     b.HasOne("WalkForum.Domain.Entities.Post", "Post")
@@ -541,17 +483,6 @@ namespace WalkForum.Infrastructure.Migrations
                     b.Navigation("Category");
                 });
 
-            modelBuilder.Entity("WalkForum.Domain.Entities.PrivateMessage", b =>
-                {
-                    b.HasOne("WalkForum.Domain.Entities.PrivateDiscussion", "PrivateDiscussion")
-                        .WithMany("PrivateMessages")
-                        .HasForeignKey("PrivateDiscussionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("PrivateDiscussion");
-                });
-
             modelBuilder.Entity("WalkForum.Domain.Entities.UserProfile", b =>
                 {
                     b.HasOne("WalkForum.Domain.Entities.User", "User")
@@ -571,11 +502,6 @@ namespace WalkForum.Infrastructure.Migrations
             modelBuilder.Entity("WalkForum.Domain.Entities.Post", b =>
                 {
                     b.Navigation("Messages");
-                });
-
-            modelBuilder.Entity("WalkForum.Domain.Entities.PrivateDiscussion", b =>
-                {
-                    b.Navigation("PrivateMessages");
                 });
 
             modelBuilder.Entity("WalkForum.Domain.Entities.User", b =>
