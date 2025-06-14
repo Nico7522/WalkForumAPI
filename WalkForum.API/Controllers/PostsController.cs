@@ -1,5 +1,7 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Scalar.AspNetCore;
 using WalkForum.Application.Posts.Commands.CreatePost;
 using WalkForum.Application.Posts.Commands.DeletePost;
 using WalkForum.Application.Posts.Commands.UpdatePost;
@@ -16,7 +18,6 @@ public class PostsController(IMediator mediator) : ControllerBase
     [HttpGet]
     public async Task<ActionResult<IEnumerable<PostDto>>> GetAll([FromQuery] string category)
     {
-            var user = HttpContext.User;
             var posts = await mediator.Send(new GetAllPostsQuery(category));
             return Ok(posts);
     }

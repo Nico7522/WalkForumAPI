@@ -7,19 +7,12 @@ using WalkForum.Domain.Entities;
 
 namespace WalkForum.Application.Posts.Dtos;
 
-public class PostDto
-{
-    public int Id { get; set; }
-    public string Title { get; set; } = default!;
-    public string Content { get; set; } = default!;
-    public DateTime CreationDate { get; set; }
-    public DateTime UpdateDate { get; set; }
-
-    public CategoryDto Category { get; set; } = default!;
-
-    public UserDto Author { get; set; } = default!;
-
-    public List<TagDto> Tags { get; set; } = new();
-    public List<MessageDto> Messages { get; set; } = new();
-
-}
+public record PostDto(int Id,
+    string title,
+    string content,
+    DateTime creationDate,
+    DateTime updateDate,
+    CategoryDto category,
+    UserDto author,
+    List<TagDto> tags,
+    List<MessageDto> messages);

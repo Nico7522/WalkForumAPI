@@ -12,9 +12,9 @@ public class PostsProfile : Profile
     public PostsProfile()
     {
         CreateMap<Post, PostDto>()
-            .ForMember(d => d.Category, opt => opt.MapFrom(src => src.Category))
-            .ForMember(d => d.Author, opt => opt.MapFrom(src => src.Author))
-            .ForMember(d => d.Messages, opt => opt.MapFrom(src => src.Messages));
+            .ForMember(d => d.category, opt => opt.MapFrom(src => src.Category))
+            .ForMember(d => d.author, opt => opt.MapFrom(src => src.Author))
+            .ForMember(d => d.messages, opt => opt.MapFrom(src => src.Messages));
 
 
         CreateMap<CreatePostCommand, Post>();

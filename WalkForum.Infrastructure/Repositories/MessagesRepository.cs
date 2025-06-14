@@ -24,4 +24,7 @@ internal class MessagesRepository(ForumDbContext dbContext) : IMessagesRepositor
     {
         return await dbContext.Messages.FirstOrDefaultAsync(msg => msg.Id == id);
     }
+
+    public async Task SaveChanges() => await dbContext.SaveChangesAsync();
+  
 }

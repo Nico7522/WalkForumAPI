@@ -2,7 +2,7 @@
 
 namespace WalkForum.Domain.Repositories;
 
-public interface IPostsRepository
+public interface IPostsRepository : IRepositoryBase
 {
     Task<IEnumerable<Post>> GetAll(string category);
     Task<Post?> GetById(int id);
@@ -10,5 +10,4 @@ public interface IPostsRepository
 
     Task<bool> Delete(Post entity);
 
-    Task SaveChanges();
 }

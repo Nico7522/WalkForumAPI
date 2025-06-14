@@ -2,7 +2,7 @@
 
 namespace WalkForum.Domain.Repositories;
 
-public interface ICategoryRepository
+public interface ICategoryRepository : IRepositoryBase
 {
     Task<Category?> GetByName(string name); 
 }

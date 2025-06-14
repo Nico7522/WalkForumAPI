@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using WalkForum.Application.Messages.Commands.CreateMessage;
 using WalkForum.Application.Messages.Commands.DeleteMessage;
+using WalkForum.Application.Messages.Commands.UpdateMessage;
 using WalkForum.Application.Messages.Dtos;
 using WalkForum.Application.Messages.Queries.GetMessagesForPost;
 
@@ -30,6 +31,14 @@ public class MessagesController(IMediator mediator) : ControllerBase
     public async Task<IActionResult> DeleteMessageForPost([FromRoute] int postId, [FromRoute] int messageId)
     {
         await mediator.Send(new DeleteMessageForPostCommand(postId, messageId));
+        return NoContent();
+    }
+    [HttpPatch("{messageId}")]
+    public async Task<IActionResult> UpdateMessageForPost([FromRoute] int postId, [FromRoute] int messageId, [FromBody] UpdateMessageCommand command)
+    {
+        command.Id = messageId;
+        command.PostId = postId;
+        await mediator.Send(command);
         return NoContent();
     }
 }

@@ -13,4 +13,9 @@ internal class CategoryRepository(ForumDbContext dbContext) : ICategoryRepositor
     {
       return await dbContext.Categories.FirstOrDefaultAsync(c => c.Name == name);  
     }
+
+    public Task SaveChanges()
+    {
+        throw new NotImplementedException();
+    }
 }

@@ -2,6 +2,7 @@
 using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.Logging;
+using WalkForum.Application.Utilities;
 using WalkForum.Domain.Entities;
 using WalkForum.Domain.Exceptions;
 using WalkForum.Domain.Repositories;
@@ -17,13 +18,10 @@ internal class CreateMessageCommandHandler(ILogger<CreateMessageCommandHandler> 
 {
     public async Task Handle(CreateMessageCommand request, CancellationToken cancellationToken)
     {
-
         logger.LogInformation("Creating new message: {@Message}", request);
-        var validation = validator.Validate(request);
-        if (!validation.IsValid)
-        {
-            throw new Domain.Exceptions.ValidationException(validation.ToDictionary());
-        }
+        Helpers.ValidForm(request, validator);
+    
+
         var post = await postsRepository.GetById(request.PostId);
         if (post is null) throw new NotFoundException("Post not found");
 

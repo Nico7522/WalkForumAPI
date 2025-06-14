@@ -10,3 +10,4 @@ public class GetPostByIdQuery(int id) : IRequest<PostDto>
     public int Id { get; } = id;
 
 }
+
