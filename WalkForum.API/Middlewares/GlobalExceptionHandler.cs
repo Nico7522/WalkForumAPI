@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using System.Text.Json;
-using System.Text.Json.Nodes;
 using WalkForum.Domain.Exceptions;
 
 namespace WalkForum.API.Middlewares;
@@ -17,11 +16,18 @@ internal sealed class GlobalExceptionHandler(IProblemDetailsService problemDetai
             NotFoundException => StatusCodes.Status404NotFound,
             ValidationException => StatusCodes.Status400BadRequest,
             UnauthorizedException => StatusCodes.Status401Unauthorized,
+            ForbiddenException => StatusCodes.Status403Forbidden,
             _ => StatusCodes.Status500InternalServerError,
         };
 
         if (exception is UnauthorizedException) {
-            var problemDetails = new ProblemDetails { Status = StatusCodes.Status401Unauthorized, Title = "You can not acces to this ressource", Detail = exception.Message, Type = "Unauthorized" };
+            var problemDetails = new ProblemDetails { Status = StatusCodes.Status401Unauthorized, Title = "Unauthorized", Detail = exception.Message, Type = "Unauthorized" };
+            return await problemDetailsService.TryWriteAsync(new ProblemDetailsContext { HttpContext = httpContext, ProblemDetails = problemDetails });
+        }
+
+        if (exception is ForbiddenException)
+        {
+            var problemDetails = new ProblemDetails { Status = StatusCodes.Status403Forbidden, Title = "You can not access to this ressource", Detail = exception.Message, Type = "Unauthorized" };
             return await problemDetailsService.TryWriteAsync(new ProblemDetailsContext { HttpContext = httpContext, ProblemDetails = problemDetails });
         }
 

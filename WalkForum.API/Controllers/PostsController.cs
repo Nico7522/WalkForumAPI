@@ -1,14 +1,13 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Scalar.AspNetCore;
 using WalkForum.Application.Posts.Commands.CreatePost;
 using WalkForum.Application.Posts.Commands.DeletePost;
 using WalkForum.Application.Posts.Commands.UpdatePost;
 using WalkForum.Application.Posts.Dtos;
 using WalkForum.Application.Posts.Queries.GetAllPosts;
 using WalkForum.Application.Posts.Queries.GetPostById;
-using WalkForum.Domain.Exceptions;
+
 namespace WalkForum.API.Controllers;
 
 [ApiController]
@@ -18,6 +17,7 @@ public class PostsController(IMediator mediator) : ControllerBase
     [HttpGet]
     public async Task<ActionResult<IEnumerable<PostDto>>> GetAll([FromQuery] string category)
     {
+        var user = HttpContext.User;
             var posts = await mediator.Send(new GetAllPostsQuery(category));
             return Ok(posts);
     }
@@ -30,6 +30,7 @@ public class PostsController(IMediator mediator) : ControllerBase
     }
 
     [HttpPost]
+    [Authorize]
     public async Task<IActionResult> Create([FromBody] CreatePostCommand createPostCommand)
     {
         int id = await mediator.Send(createPostCommand);
@@ -39,9 +40,10 @@ public class PostsController(IMediator mediator) : ControllerBase
     [HttpDelete("{id}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-
+    [Authorize]
     public async Task<IActionResult> Delete([FromRoute] int id)
     {
+        var user = HttpContext.User;
         await mediator.Send(new DeletePostCommand(id));
         return NoContent();
     }
@@ -49,6 +51,7 @@ public class PostsController(IMediator mediator) : ControllerBase
     [HttpPatch("{id}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [Authorize]
     public async Task<IActionResult> Update(UpdatePostCommand updatePostCommand, [FromRoute] int id) {
 
         updatePostCommand.Id = id;
