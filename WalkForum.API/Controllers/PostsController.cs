@@ -7,6 +7,7 @@ using WalkForum.Application.Posts.Commands.UpdatePost;
 using WalkForum.Application.Posts.Dtos;
 using WalkForum.Application.Posts.Queries.GetAllPosts;
 using WalkForum.Application.Posts.Queries.GetPostById;
+using WalkForum.Infrastructure.Filters;
 
 namespace WalkForum.API.Controllers;
 
@@ -17,7 +18,6 @@ public class PostsController(IMediator mediator) : ControllerBase
     [HttpGet]
     public async Task<ActionResult<IEnumerable<PostDto>>> GetAll([FromQuery] string category)
     {
-        var user = HttpContext.User;
             var posts = await mediator.Send(new GetAllPostsQuery(category));
             return Ok(posts);
     }
@@ -40,10 +40,10 @@ public class PostsController(IMediator mediator) : ControllerBase
     [HttpDelete("{id}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
+    //[TypeFilter(typeof(CanDeleteAuthorizationFilter))]
     [Authorize]
     public async Task<IActionResult> Delete([FromRoute] int id)
     {
-        var user = HttpContext.User;
         await mediator.Send(new DeletePostCommand(id));
         return NoContent();
     }

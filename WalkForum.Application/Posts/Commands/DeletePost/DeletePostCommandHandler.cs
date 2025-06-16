@@ -14,7 +14,7 @@ public class DeletePostCommandHandler(IPostsRepository postsRepository, IUserCon
         var post = await postsRepository.GetById(request.Id);
         if (post is null) throw new NotFoundException("Post not found");
 
-        if (post.AuthorId != userContext.GetCurrentUser().Id && !userContext.GetCurrentUser().IsInRole(UserRoles.Administrator)) throw new ForbiddenException("Not authorized");
+        if (post.AuthorId != userContext.GetCurrentUser().Id && !userContext.GetCurrentUser().IsInRole(UserRoles.Administrator) && !userContext.GetCurrentUser().IsInRole(UserRoles.Moderator)) throw new ForbiddenException("Not authorized");
 
         await postsRepository.Delete(post);
     }
