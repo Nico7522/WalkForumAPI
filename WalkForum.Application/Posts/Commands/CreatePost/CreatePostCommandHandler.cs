@@ -14,6 +14,7 @@ public class CreatePostCommandHandler(IMapper mapper,
     IValidator<CreatePostCommand> validator, 
     IPostsRepository postsRepository, 
     ICategoryRepository categoryRepository,
+    ITagsRepository tagsRepository,
     ILogger<CreatePostCommandHandler> logger,
     IUserContext userContext) : IRequestHandler<CreatePostCommand, int>
 {
@@ -25,11 +26,15 @@ public class CreatePostCommandHandler(IMapper mapper,
         var category = await categoryRepository.GetById(request.CategoryId);
         if (category is null) throw new NotFoundException("Category not found");
 
-
         var post = mapper.Map<Post>(request);
 
-        post.CreationDate = DateTime.Now;
-        post.UpdateDate = DateTime.Now;
+        foreach (var tagId in request.Tags)
+        {
+            var tag = await tagsRepository.GetById(tagId);
+            if (tag is null) throw new NotFoundException("Tag not found");
+
+            post.Tags.Add(tag);
+        }
         post.AuthorId = userContext.GetCurrentUser().Id;
 
         int postId = await postsRepository.Create(post);

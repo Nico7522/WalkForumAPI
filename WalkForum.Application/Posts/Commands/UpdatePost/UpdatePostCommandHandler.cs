@@ -23,8 +23,8 @@ public class UpdatePostCommandHandler(IValidator<UpdatePostCommand> validator,
         if (post is null) throw new NotFoundException("Post not found");
         if (post.AuthorId != userContext.GetCurrentUser().Id && !userContext.GetCurrentUser().IsInRole(UserRoles.Administrator) && !userContext.GetCurrentUser().IsInRole(UserRoles.Moderator)) throw new ForbiddenException("Not authorized");
 
-
         mapper.Map(request, post);
+
         await postsRepository.SaveChanges();
     }
 }

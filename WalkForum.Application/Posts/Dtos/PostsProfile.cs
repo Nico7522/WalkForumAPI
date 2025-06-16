@@ -14,13 +14,19 @@ public class PostsProfile : Profile
         CreateMap<Post, PostDto>()
             .ForMember(d => d.category, opt => opt.MapFrom(src => src.Category))
             .ForMember(d => d.author, opt => opt.MapFrom(src => src.Author))
-            .ForMember(d => d.messages, opt => opt.MapFrom(src => src.Messages));
+            .ForMember(d => d.messages, opt => opt.MapFrom(src => src.Messages))
+            .ForMember(d => d.tags, opt => opt.MapFrom(src => src.Tags));
 
 
-        CreateMap<CreatePostCommand, Post>();
+
+        CreateMap<CreatePostCommand, Post>()
+            .ForMember(d => d.CreationDate, opt => opt.MapFrom(opt => DateTime.Now))
+            .ForMember(d => d.UpdateDate, opt => opt.MapFrom(opt => DateTime.Now))
+            .ForMember(d => d.Tags, opt => opt.Ignore());
 
 
-        CreateMap<UpdatePostCommand, Post>();
+        CreateMap<UpdatePostCommand, Post>()
+            .ForMember(d => d.UpdateDate, opt => opt.MapFrom(opt => DateTime.Now));
 
     }
 }

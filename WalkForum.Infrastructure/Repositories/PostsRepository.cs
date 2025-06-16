@@ -23,10 +23,11 @@ internal class PostsRepository(ForumDbContext dbContext) : IPostsRepository
 
     public async Task<IEnumerable<Post>> GetAll(string category)
     {
-       var posts = await dbContext.Posts
-            .Include(p => p.Author)
-            .Include(p => p.Category)   
-            .Where(p => p.Category.Name == category)
+        var posts = await dbContext.Posts
+             .Include(p => p.Author)
+             .Include(p => p.Category)
+             .Where(p => p.Category.Name == category)
+             .Include(p => p.Tags)
             .ToListAsync();
        return posts;
     }
@@ -37,6 +38,7 @@ internal class PostsRepository(ForumDbContext dbContext) : IPostsRepository
             .Include(p => p.Category)
             .Include(p => p.Author)
             .Include(p => p.Messages)
+            .Include(p => p.Tags)
             .FirstOrDefaultAsync(p => p.Id == id);
         return post;
     }

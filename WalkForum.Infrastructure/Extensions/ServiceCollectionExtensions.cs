@@ -32,6 +32,8 @@ public static class ServiceCollectionExtensions
 
         services.AddScoped<IPostsRepository, PostsRepository>();
         services.AddScoped<ICategoryRepository, CategoryRepository>();
+        services.AddScoped<ITagsRepository, TagsRepository>();
+
         services.AddScoped<IMessagesRepository, MessagesRepository>();  
     }
 }

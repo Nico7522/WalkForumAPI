@@ -1,4 +1,4 @@
 ﻿namespace WalkForum.Application.Tags;
 
-public record TagDto();
+public record TagDto(int id, string name);
 
