@@ -1,13 +1,10 @@
-﻿using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Http.Features;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Http.Features;
 using Microsoft.Extensions.DependencyInjection.Extensions;
-using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
 using Serilog;
+using System.Diagnostics;
 using WalkForum.API.Middlewares;
-using WalkForum.Application.Extensions;
-using WalkForum.Infrastructure.Extensions;
+
 
 namespace WalkForum.API.Extensions;
 
@@ -38,10 +35,12 @@ public static class WebApplicationBuilderExtensions
             options.CustomizeProblemDetails = context =>
             {
                 context.ProblemDetails.Instance = $"{context.HttpContext.Request.Method} {context.HttpContext.Request.Path}";
+
                 context.ProblemDetails.Extensions.TryAdd("requestId", context.HttpContext.TraceIdentifier);
 
-                var activity = context.HttpContext.Features.Get<IHttpActivityFeature>()?.Activity;
-                context.ProblemDetails.Extensions.TryAdd("TraceId", activity?.Id);
+                Activity? activity = context.HttpContext.Features.Get<IHttpActivityFeature>()?.Activity;
+                context.ProblemDetails.Extensions.TryAdd("traceId", activity?.Id);
+
             };
         });
         builder.Services.AddEndpointsApiExplorer();

@@ -17,7 +17,7 @@ internal class CategoryRepository(ForumDbContext dbContext) : ICategoryRepositor
 
     public async Task<Category?> GetByName(string name)
     {
-      return await dbContext.Categories.FirstOrDefaultAsync(c => c.Name == name);  
+      return await dbContext.Categories.FirstOrDefaultAsync(c => c.Name.ToLower() == name.ToLower());  
     }
 
     public Task SaveChanges()

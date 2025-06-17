@@ -28,11 +28,11 @@ var RoleSeeder = scope.ServiceProvider.GetRequiredService<IRoleSeeder>();
 await Categoryseeder.Seed();
 await TagSeeder.Seed();
 await RoleSeeder.Seed();
-
+app.UseExceptionHandler();
+app.UseStatusCodePages();
 app.UseSwagger();
 app.UseSwaggerUI();
 app.UseSerilogRequestLogging();
-app.UseExceptionHandler();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {

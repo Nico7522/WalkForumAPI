@@ -26,7 +26,7 @@ internal class PostsRepository(ForumDbContext dbContext) : IPostsRepository
         var posts = await dbContext.Posts
              .Include(p => p.Author)
              .Include(p => p.Category)
-             .Where(p => p.Category.Name == category)
+             .Where(p => p.Category.Name.ToLower() == category.ToLower())
              .Include(p => p.Tags)
             .ToListAsync();
        return posts;
