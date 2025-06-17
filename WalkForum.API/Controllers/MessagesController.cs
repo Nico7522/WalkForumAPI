@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WalkForum.Application.Messages.Commands.CreateMessage;
 using WalkForum.Application.Messages.Commands.DeleteMessage;
@@ -20,6 +21,7 @@ public class MessagesController(IMediator mediator) : ControllerBase
     }
 
     [HttpPost]
+    [Authorize]
     public async Task<IActionResult> CreateMessage([FromRoute] int postId, CreateMessageCommand command)
     {
         command.PostId = postId;
@@ -28,12 +30,14 @@ public class MessagesController(IMediator mediator) : ControllerBase
     }
 
     [HttpDelete("{messageId}")]
+    [Authorize]
     public async Task<IActionResult> DeleteMessageForPost([FromRoute] int postId, [FromRoute] int messageId)
     {
         await mediator.Send(new DeleteMessageForPostCommand(postId, messageId));
         return NoContent();
     }
     [HttpPatch("{messageId}")]
+    [Authorize]
     public async Task<IActionResult> UpdateMessageForPost([FromRoute] int postId, [FromRoute] int messageId, [FromBody] UpdateMessageCommand command)
     {
         command.Id = messageId;

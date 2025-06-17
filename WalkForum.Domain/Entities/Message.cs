@@ -8,12 +8,10 @@ public class Message
     public DateTime CreationDate { get; set; }
     public DateTime UpdateDate { get; set; }
 
-
     public int UserId { get; set; } = default!;
     public User User { get; set; } = default!;
 
     public int PostId  { get; set; }
     public Post Post { get; set; } = default!;
-
 
 }

@@ -11,11 +11,16 @@ public class MessagesProfile : Profile
 {
     public MessagesProfile()
     {
-        CreateMap<CreateMessageCommand, Message>();
+        CreateMap<CreateMessageCommand, Message>()
+            .ForMember(msg => msg.CreationDate, opt => opt.MapFrom(src => DateTime.Now))
+            .ForMember(msg => msg.UpdateDate, opt => opt.MapFrom(src => DateTime.Now));
+
+
 
         CreateMap<Message, MessageDto>()
-            .ForMember(msg => msg.userId, opt => opt.MapFrom(src => src.UserId));
+            .ForCtorParam("username", opt => opt.MapFrom(src => src.User.UserName));
 
-        CreateMap<UpdateMessageCommand, Message>();
+        CreateMap<UpdateMessageCommand, Message>()
+               .ForMember(msg => msg.UpdateDate, opt => opt.MapFrom(src => DateTime.Now));
     }
 }

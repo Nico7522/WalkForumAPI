@@ -2,6 +2,7 @@
 using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.Logging;
+using WalkForum.Application.Users;
 using WalkForum.Application.Utilities;
 using WalkForum.Domain.Entities;
 using WalkForum.Domain.Exceptions;
@@ -13,6 +14,7 @@ internal class CreateMessageCommandHandler(ILogger<CreateMessageCommandHandler> 
     IPostsRepository postsRepository, 
     IMessagesRepository messagesRepository, 
     IMapper mapper,
+    IUserContext userContext,
     IValidator<CreateMessageCommand> validator)
     : IRequestHandler<CreateMessageCommand>
 {
@@ -28,9 +30,7 @@ internal class CreateMessageCommandHandler(ILogger<CreateMessageCommandHandler> 
 
         var message = mapper.Map<Message>(request);
 
-        message.CreationDate = DateTime.Now;
-        message.UpdateDate = DateTime.Now;
-        message.UserId = 1;
+        message.UserId = userContext.GetCurrentUser().Id;
 
         await messagesRepository.Create(message);
 
