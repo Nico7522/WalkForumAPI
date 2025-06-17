@@ -1,7 +1,7 @@
 ﻿using MediatR;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using WalkForum.Application.Users.Commands.AssignUserRole;
+using WalkForum.Application.Users.Commands.UnassignUserRole;
 
 namespace WalkForum.API.Controllers
 {
@@ -14,6 +14,13 @@ namespace WalkForum.API.Controllers
         {
             await mediator.Send(command);
             return NoContent();
+        }
+        [HttpDelete("role")]
+        public async Task<IActionResult> UnassignRole(UnassignUserRoleCommand command)
+        {
+            await mediator.Send(command);
+            return NoContent();
+
         }
     }
 }
