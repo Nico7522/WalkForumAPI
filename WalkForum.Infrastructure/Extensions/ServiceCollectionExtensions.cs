@@ -33,7 +33,17 @@ public static class ServiceCollectionExtensions
         services.AddScoped<IPostsRepository, PostsRepository>();
         services.AddScoped<ICategoryRepository, CategoryRepository>();
         services.AddScoped<ITagsRepository, TagsRepository>();
+        services.AddScoped<IMessagesRepository, MessagesRepository>();
 
-        services.AddScoped<IMessagesRepository, MessagesRepository>();  
+        var emailSettings = configuration.GetSection("EmailSettings");
+        var defaultFromEmail = emailSettings["DefaultFromEmail"];
+        var host = emailSettings["SMTPSetting:Host"];
+        var port = emailSettings.GetValue<int>("Port");
+        var username = emailSettings["username"];
+        var password = emailSettings["password"];
+        services.AddFluentEmail(defaultFromEmail).AddSmtpSender(host, port, username, password).AddRazorRenderer();
+        services.AddScoped<IEmailRepository, EmailRepository>();
+
+
     }
 }

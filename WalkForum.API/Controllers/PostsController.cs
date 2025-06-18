@@ -40,6 +40,8 @@ public class PostsController(IMediator mediator) : ControllerBase
     [HttpDelete("{id}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(StatusCodes.Status403Forbidden)]
     //[TypeFilter(typeof(CanDeleteAuthorizationFilter))]
     [Authorize]
     public async Task<IActionResult> Delete([FromRoute] int id)
@@ -51,6 +53,8 @@ public class PostsController(IMediator mediator) : ControllerBase
     [HttpPatch("{id}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(StatusCodes.Status403Forbidden)]
     [Authorize]
     public async Task<IActionResult> Update(UpdatePostCommand updatePostCommand, [FromRoute] int id) {
 

@@ -5,7 +5,17 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UserSecretsId>53e6e0df-374f-47ff-9ed5-36f44976a74f</UserSecretsId>
+	  <PreserveCompilationContext>true</PreserveCompilationContext>
+
   </PropertyGroup>
+
+  <ItemGroup>
+    <Content Remove="EmailTemplates\ForgotPassword.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="EmailTemplates\ForgotPassword.cshtml" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.1" />
@@ -25,5 +35,7 @@
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
 	</ItemGroup>
+
+
 
 </Project>
