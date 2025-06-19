@@ -23,8 +23,8 @@ public static class ServiceCollectionExtensions
         {
             options.User.RequireUniqueEmail = true;
 
-        }).AddRoles<IdentityRole<int>>().AddClaimsPrincipalFactory<WalkForumUserClaimsPrincipalFactory>().AddEntityFrameworkStores<ForumDbContext>().AddSignInManager<CustomSignInManager>();
-        //services.AddScoped<SignInManager<User>, CustomSignInManager>();
+        }).AddRoles<IdentityRole<int>>().AddClaimsPrincipalFactory<WalkForumUserClaimsPrincipalFactory>().AddEntityFrameworkStores<ForumDbContext>().AddSignInManager<CustomSignInManager>().AddDefaultTokenProviders();
+        services.Configure<DataProtectionTokenProviderOptions>(options => options.TokenLifespan = TimeSpan.FromHours(1));
 
         services.AddScoped<ICategorySeeder, CategorySeeder>();
         services.AddScoped<ITagSeeder, TagSeeder>();

@@ -1,10 +1,8 @@
 ﻿
 using FluentEmail.Core;
-using Microsoft.AspNetCore.Identity;
 using System.Net.Mail;
 using WalkForum.Domain.EmailModel;
-using WalkForum.Domain.Entities;
-using WalkForum.Domain.Exceptions;
+
 using WalkForum.Domain.Repositories;
 
 namespace WalkForum.Infrastructure.Repositories;
@@ -27,12 +25,17 @@ internal class EmailRepository(IFluentEmail fluentEmail) : IEmailRepository
         }
     }
 
-    public async Task SendUsingTemplate(EmailMetadata emailMetadata, string username, string templateName)
+    public async Task SendUsingTemplate<T>(EmailMetadata emailMetadata, T data, string templateName)
     {
-      
+        var templatePath = Path.Combine(AppContext.BaseDirectory, "EmailTemplates", templateName);
+
+        if (!File.Exists(templatePath))
+        {
+            throw new FileNotFoundException($"Template file '{templatePath}' not found.");
+        }
         await fluentEmail.To(emailMetadata.ToAddress)
              .Subject(emailMetadata.Subject)
-             .UsingTemplateFromFile(templateName, username)
+             .UsingTemplateFromFile(templatePath, data)
              .SendAsync();
     }
 }
