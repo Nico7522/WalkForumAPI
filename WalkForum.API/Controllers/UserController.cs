@@ -57,7 +57,7 @@ namespace WalkForum.API.Controllers
             await mediator.Send(command);
             return NoContent();
         }
-        [HttpPost("reset-password/{token}")]
+        [HttpPost("reset-password")]
         public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordCommand command, [FromQuery] string token, [FromQuery] string email)
         {
             command.Token = token;

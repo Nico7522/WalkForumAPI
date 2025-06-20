@@ -21,6 +21,6 @@ internal class ResetPasswordCommandHandler(UserManager<User> userManager, IValid
         var token = HttpUtility.UrlDecode(request.Token);
 
         var result = await userManager.ResetPasswordAsync(user, token!, request.Password);
-        if (result.Errors.Any()) throw new BadRequestException("Something went wrong");
+        if (!result.Succeeded) throw new BadRequestException("Invalid token");
     }
 }

@@ -4,17 +4,19 @@ using FluentValidation;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.WebUtilities;
+using Microsoft.Extensions.Configuration;
+using WalkForum.Application.Emails;
+using WalkForum.Application.Emails.EmailModel;
+using WalkForum.Application.Emails.ViewModels;
 using WalkForum.Application.Utilities;
-using WalkForum.Application.ViewModels;
-using WalkForum.Domain.EmailModel;
 using WalkForum.Domain.Entities;
 using WalkForum.Domain.Exceptions;
-using WalkForum.Domain.Repositories;
 
 namespace WalkForum.Application.Users.Commands.ForgotPassword;
 
 internal class ForgotPasswordCommandHandler(IEmailRepository emailRepository, 
     UserManager<User> userManager,
+    IConfiguration configuration,
     IValidator<ForgotPasswordCommand> validator) : IRequestHandler<ForgotPasswordCommand>
 {
     public async Task Handle(ForgotPasswordCommand request, CancellationToken cancellationToken)
@@ -31,7 +33,10 @@ internal class ForgotPasswordCommandHandler(IEmailRepository emailRepository,
             {"Email", request.Email}
         };
 
-        var callback = QueryHelpers.AddQueryString(request.ClientUri, param);
+        var url = configuration["CallbackUrl"];
+        if (String.IsNullOrWhiteSpace(url)) throw new Exception("Something went wrong");
+        
+        var callback = QueryHelpers.AddQueryString(url, param);
         
         EmailMetadata email = new(request.Email, "Reset your password");
         await emailRepository.SendUsingTemplate(email, new ForgotPasswordModel {Name = user.Name, Link = callback }, "ForgotPassword.cshtml");

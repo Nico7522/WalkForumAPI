@@ -1,8 +1,6 @@
-﻿
+﻿using WalkForum.Application.Emails.EmailModel;
 
-using WalkForum.Domain.EmailModel;
-
-namespace WalkForum.Domain.Repositories;
+namespace WalkForum.Application.Emails;
 
 public interface IEmailRepository
 {

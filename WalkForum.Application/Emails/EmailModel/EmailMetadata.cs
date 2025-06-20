@@ -1,6 +1,4 @@
-﻿
-
-namespace WalkForum.Domain.EmailModel;
+﻿namespace WalkForum.Application.Emails.EmailModel;
 
 public class EmailMetadata(string toAdress, string subject, string? body = null, string? attachmentPath = null)
 {

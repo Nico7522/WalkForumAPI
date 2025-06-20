@@ -9,6 +9,7 @@ using WalkForum.Domain.Entities;
 using Microsoft.AspNetCore.Identity;
 using WalkForum.Infrastructure.Authorization;
 using WalkForum.Application.CustomSignInManager;
+using WalkForum.Application.Emails;
 
 
 namespace WalkForum.Infrastructure.Extensions;

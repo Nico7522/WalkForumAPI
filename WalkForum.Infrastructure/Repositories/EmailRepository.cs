@@ -1,7 +1,8 @@
 ﻿
 using FluentEmail.Core;
 using System.Net.Mail;
-using WalkForum.Domain.EmailModel;
+using WalkForum.Application.Emails;
+using WalkForum.Application.Emails.EmailModel;
 
 using WalkForum.Domain.Repositories;
 

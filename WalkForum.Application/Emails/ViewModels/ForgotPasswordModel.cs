@@ -1,4 +1,4 @@
-﻿namespace WalkForum.Application.ViewModels;
+﻿namespace WalkForum.Application.Emails.ViewModels;
 
 public class ForgotPasswordModel
 {

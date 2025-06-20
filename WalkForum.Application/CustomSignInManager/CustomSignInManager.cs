@@ -30,6 +30,9 @@ namespace WalkForum.Application.CustomSignInManager
             var user = await _userManager.FindByEmailAsync(email);
             if (user is  null) throw new BadRequestException("Bad credentials");
 
+            var isConfirmed = await _userManager.IsEmailConfirmedAsync(user);
+            if (!isConfirmed) throw new BadRequestException("Account not confirmed");
+
             var result = await base.PasswordSignInAsync(user, password, isPersistent, lockoutOnFailure);
             if(!result.Succeeded) throw new BadRequestException("Bad credentials");
 
