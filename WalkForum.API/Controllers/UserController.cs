@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WalkForum.Application.Users.Commands.AssignUserRole;
 using WalkForum.Application.Users.Commands.ForgotPassword;
+using WalkForum.Application.Users.Commands.ResetPassword;
 using WalkForum.Application.Users.Commands.UnassignUserRole;
 using WalkForum.Application.Users.Commands.UpdateUser;
 using WalkForum.Domain.Constants;
@@ -50,9 +51,17 @@ namespace WalkForum.API.Controllers
             return NoContent();
         }
 
-        [HttpPost]
-        public async Task<IActionResult> TestSendEmail([FromBody] ForgotPasswordCommand command)
+        [HttpPost("forgot-password")]
+        public async Task<IActionResult> ForgotPassword([FromBody] ForgotPasswordCommand command)
         {
+            await mediator.Send(command);
+            return NoContent();
+        }
+        [HttpPost("reset-password/{token}")]
+        public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordCommand command, [FromQuery] string token, [FromQuery] string email)
+        {
+            command.Token = token;
+            command.Email = email;
             await mediator.Send(command);
             return NoContent();
         }

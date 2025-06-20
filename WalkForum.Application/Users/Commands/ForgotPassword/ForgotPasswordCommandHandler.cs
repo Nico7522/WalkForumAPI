@@ -32,7 +32,7 @@ internal class ForgotPasswordCommandHandler(IEmailRepository emailRepository,
         };
 
         var callback = QueryHelpers.AddQueryString(request.ClientUri, param);
-
+        
         EmailMetadata email = new(request.Email, "Reset your password");
         await emailRepository.SendUsingTemplate(email, new ForgotPasswordModel {Name = user.Name, Link = callback }, "ForgotPassword.cshtml");
     }
