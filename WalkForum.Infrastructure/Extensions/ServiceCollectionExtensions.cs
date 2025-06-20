@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-
 using WalkForum.Domain.Repositories;
 using WalkForum.Infrastructure.Persistance;
 using WalkForum.Infrastructure.Repositories;
@@ -10,6 +9,7 @@ using WalkForum.Domain.Entities;
 using Microsoft.AspNetCore.Identity;
 using WalkForum.Infrastructure.Authorization;
 using WalkForum.Application.CustomSignInManager;
+
 
 namespace WalkForum.Infrastructure.Extensions;
 
@@ -23,8 +23,14 @@ public static class ServiceCollectionExtensions
         {
             options.User.RequireUniqueEmail = true;
 
-        }).AddRoles<IdentityRole<int>>().AddClaimsPrincipalFactory<WalkForumUserClaimsPrincipalFactory>().AddEntityFrameworkStores<ForumDbContext>().AddSignInManager<CustomSignInManager>();
-        //services.AddScoped<SignInManager<User>, CustomSignInManager>();
+        }).AddRoles<IdentityRole<int>>()
+        .AddClaimsPrincipalFactory<WalkForumUserClaimsPrincipalFactory>()
+        .AddEntityFrameworkStores<ForumDbContext>()
+        .AddSignInManager<CustomSignInManager>()
+        .AddDefaultTokenProviders();
+
+
+        services.Configure<DataProtectionTokenProviderOptions>(options => options.TokenLifespan = TimeSpan.FromHours(1));
 
         services.AddScoped<ICategorySeeder, CategorySeeder>();
         services.AddScoped<ITagSeeder, TagSeeder>();
@@ -35,6 +41,7 @@ public static class ServiceCollectionExtensions
         services.AddScoped<ITagsRepository, TagsRepository>();
         services.AddScoped<IMessagesRepository, MessagesRepository>();
 
+
         var emailSettings = configuration.GetSection("EmailSettings");
         var defaultFromEmail = emailSettings["DefaultFromEmail"];
         var host = emailSettings["SMTPSetting:Host"];
@@ -43,6 +50,7 @@ public static class ServiceCollectionExtensions
         var password = emailSettings["password"];
         services.AddFluentEmail(defaultFromEmail).AddSmtpSender(host, port, username, password).AddRazorRenderer();
         services.AddScoped<IEmailRepository, EmailRepository>();
+
 
 
     }

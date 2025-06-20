@@ -20,5 +20,11 @@
   <ItemGroup>
     <ProjectReference Include="..\WalkForum.Application\WalkForum.Application.csproj" />
   </ItemGroup>
+	<ItemGroup>
+		<Content Include="EmailTemplates\*.cshtml">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+	</ItemGroup>
+
 
 </Project>
