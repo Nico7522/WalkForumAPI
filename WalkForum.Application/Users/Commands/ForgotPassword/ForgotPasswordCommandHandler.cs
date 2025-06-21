@@ -36,9 +36,9 @@ internal class ForgotPasswordCommandHandler(IEmailRepository emailRepository,
         var url = configuration["CallbackUrl"];
         if (String.IsNullOrWhiteSpace(url)) throw new Exception("Something went wrong");
         
-        var callback = QueryHelpers.AddQueryString(url, param);
+        var callback = QueryHelpers.AddQueryString(url + "/resetpassword", param);
         
         EmailMetadata email = new(request.Email, "Reset your password");
-        await emailRepository.SendUsingTemplate(email, new ForgotPasswordModel {Name = user.Name, Link = callback }, "ForgotPassword.cshtml");
+        await emailRepository.SendUsingTemplate(email, new ForgotPasswordModel {Name = user.Name, Link = callback  }, "ForgotPassword.cshtml");
     }
 }

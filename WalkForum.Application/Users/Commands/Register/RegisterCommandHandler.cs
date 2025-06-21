@@ -48,7 +48,7 @@ public class RegisterCommandHandler(UserManager<User> userManager,
         var url = configuration["CallbackUrl"];
         if (String.IsNullOrWhiteSpace(url)) throw new Exception("Something went wrong");
 
-        var callback = QueryHelpers.AddQueryString(url, param);
+        var callback = QueryHelpers.AddQueryString(url + "/confirmaccount", param);
 
         EmailMetadata email = new(request.Email, "Confirm your account");
         await emailRepository.SendUsingTemplate(email, new ConfirmAccountModel { Name = userEntity.Name, Link = callback }, "ConfirmAccount.cshtml");
