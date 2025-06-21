@@ -40,6 +40,11 @@ namespace WalkForum.API.Controllers
         }
 
         [HttpDelete("{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [Authorize]
         public async Task<IActionResult> Delete([FromRoute] int id)
         {
             await mediator.Send(new DeleteUserCommand(id));
@@ -60,12 +65,17 @@ namespace WalkForum.API.Controllers
         }
 
         [HttpPost("forgot-password")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> ForgotPassword([FromBody] ForgotPasswordCommand command)
         {
             await mediator.Send(command);
             return NoContent();
         }
         [HttpPost("reset-password")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordCommand command, [FromQuery] string token, [FromQuery] string email)
         {
             command.Token = token;

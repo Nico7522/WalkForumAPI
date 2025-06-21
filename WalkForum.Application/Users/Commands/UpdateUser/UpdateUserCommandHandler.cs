@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.Hosting;
 using WalkForum.Domain.Constants;
 using WalkForum.Domain.Entities;
 using WalkForum.Domain.Exceptions;
@@ -16,12 +15,16 @@ public class UpdateUserCommandHandler(UserManager<User> userManager,
     {
         if (request.Id != userContext.GetCurrentUser().Id && !userContext.GetCurrentUser().IsInRole(UserRoles.Administrator)) throw new ForbiddenException("Not authorized");
 
-        var user = await userManager.FindByIdAsync(request.Id.ToString());
-        if (user is null) throw new NotFoundException("User not found");
+        var userFoundById = await userManager.FindByIdAsync(request.Id.ToString());
+        if (userFoundById is null) throw new NotFoundException("User not found");
 
+        if (userFoundById.UserName != request.Username)
+        {
+            var userFoundByUsername = await userManager.FindByNameAsync(request.Username);
+            if (userFoundByUsername is null) throw new NotFoundException("User not found");
+        }
 
-        mapper.Map(request, user);
-
-        await userManager.UpdateAsync(user);
+        mapper.Map(request, userFoundById);
+        await userManager.UpdateAsync(userFoundById);
     }
 }
