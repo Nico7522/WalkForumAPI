@@ -11,7 +11,8 @@ public class UsersProfile : Profile
     public UsersProfile()
     {
         CreateMap<User, UserDto>();
-        CreateMap<RegisterCommand, User>();
+        CreateMap<RegisterCommand, User>()
+            .ForMember(src => src.UserProfile, opt => opt.MapFrom(opt => new UserProfile { CreationDate = DateTime.Now, UpdateDate = DateTime.Now}));
         CreateMap<UpdateUserCommand, User>();
 
 

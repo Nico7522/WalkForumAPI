@@ -10,6 +10,7 @@ using WalkForum.Application.Emails.ViewModels;
 using WalkForum.Application.Utilities;
 using WalkForum.Domain.Constants;
 using WalkForum.Domain.Entities;
+using WalkForum.Domain.Exceptions;
 namespace WalkForum.Application.Users.Commands.Register;
 
 public class RegisterCommandHandler(UserManager<User> userManager, 
@@ -20,11 +21,15 @@ public class RegisterCommandHandler(UserManager<User> userManager,
 {
     public async Task Handle(RegisterCommand request, CancellationToken cancellationToken)
     {
+        var userFindByEmail = await userManager.FindByEmailAsync(request.Email);
+        if (userFindByEmail is not null) throw new BadRequestException("Email already taken");
+
+        var userFindByUsername = await userManager.FindByNameAsync(request.Username);
+        if (userFindByUsername is not null) throw new BadRequestException("Username already taken");
 
         await Helpers.ValidFormAsync<RegisterCommand>(request, validator);
         var userEntity = mapper.Map<User>(request);
 
-        userEntity.UserProfile = new UserProfile() { CreationDate = DateTime.Now, UpdateDate = DateTime.Now };
         await userManager.CreateAsync(userEntity, request.Password);
         
         await userManager.AddToRoleAsync(userEntity, UserRoles.User);
