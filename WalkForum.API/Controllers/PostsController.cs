@@ -7,7 +7,6 @@ using WalkForum.Application.Posts.Commands.UpdatePost;
 using WalkForum.Application.Posts.Dtos;
 using WalkForum.Application.Posts.Queries.GetAllPosts;
 using WalkForum.Application.Posts.Queries.GetPostById;
-using WalkForum.Infrastructure.Filters;
 
 namespace WalkForum.API.Controllers;
 

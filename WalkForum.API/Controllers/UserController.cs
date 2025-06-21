@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WalkForum.Application.Users.Commands.AssignUserRole;
+using WalkForum.Application.Users.Commands.DeleteUser;
 using WalkForum.Application.Users.Commands.ForgotPassword;
 using WalkForum.Application.Users.Commands.ResetPassword;
 using WalkForum.Application.Users.Commands.UnassignUserRole;
@@ -36,6 +37,13 @@ namespace WalkForum.API.Controllers
             await mediator.Send(command);
             return NoContent();
 
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete([FromRoute] int id)
+        {
+            await mediator.Send(new DeleteUserCommand(id));
+            return NoContent();
         }
 
         [HttpPatch("{id}")]
