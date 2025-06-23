@@ -1,8 +1,6 @@
-﻿
-using FluentValidation;
+﻿using FluentValidation;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.WebUtilities;
 using System.Web;
 using WalkForum.Application.Utilities;
 using WalkForum.Domain.Entities;
