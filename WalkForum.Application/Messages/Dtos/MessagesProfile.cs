@@ -1,6 +1,4 @@
-﻿
-
-using AutoMapper;
+﻿using AutoMapper;
 using WalkForum.Application.Messages.Commands.CreateMessage;
 using WalkForum.Application.Messages.Commands.UpdateMessage;
 using WalkForum.Domain.Entities;

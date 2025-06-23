@@ -1,6 +1,5 @@
-﻿using AutoMapper;
-using WalkForum.Domain.Entities;
-
+﻿using WalkForum.Domain.Entities;
+using AutoMapper;
 namespace WalkForum.Application.Categories.Dtos;
 
 public class CategoriesProfile : Profile

@@ -39,7 +39,7 @@ if (app.Environment.IsDevelopment())
     app.MapOpenApi();
     app.MapScalarApiReference();
 }
-
+app.UseStaticFiles();
 app.UseHttpsRedirection();
 
 app.MapGroup("api/identity").WithTags("identity").MapIdentityApi<User>();

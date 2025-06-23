@@ -36,11 +36,12 @@ public static class ServiceCollectionExtensions
         services.AddScoped<ICategorySeeder, CategorySeeder>();
         services.AddScoped<ITagSeeder, TagSeeder>();
         services.AddScoped<IRoleSeeder, RoleSeeder>();
-
         services.AddScoped<IPostsRepository, PostsRepository>();
         services.AddScoped<ICategoryRepository, CategoryRepository>();
         services.AddScoped<ITagsRepository, TagsRepository>();
         services.AddScoped<IMessagesRepository, MessagesRepository>();
+        services.AddScoped<IUserProfileRepository, UserProfileRepository>();
+
 
 
         var emailSettings = configuration.GetSection("EmailSettings");

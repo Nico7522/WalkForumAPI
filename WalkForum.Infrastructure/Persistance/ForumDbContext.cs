@@ -19,7 +19,9 @@ internal class ForumDbContext(DbContextOptions<ForumDbContext> options) : Identi
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
-  
+
+        modelBuilder.Entity<UserProfile>().Property(p => p.Avatar).HasDefaultValue("default.png");
+
         modelBuilder.Entity<Category>()
             .HasMany(e => e.Posts)
             .WithOne(e => e.Category)
