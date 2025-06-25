@@ -21,11 +21,38 @@ internal class UserProfileRepository(ForumDbContext dbContext) : IUserProfileRep
 
     public async Task UpdateAvatar(string filename, IFormFile file)
     {
-        string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Avatars", filename);
-        FileStream stream = new FileStream(path, FileMode.Create);
-        file.CopyTo(stream);
-        stream.Dispose();
-        stream.Close();
-        await dbContext.SaveChangesAsync();
+        try
+        {
+            string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Avatars", filename);
+
+            string? directory = Path.GetDirectoryName(path);
+            if (!string.IsNullOrEmpty(directory) && !Directory.Exists(directory))
+            {
+                Directory.CreateDirectory(directory);
+            }
+
+            using (FileStream stream = new FileStream(path, FileMode.Create))
+            {
+                await file.CopyToAsync(stream);
+            }
+
+            await dbContext.SaveChangesAsync();
+        }
+        catch (DirectoryNotFoundException ex)
+        {
+            throw new Exception("Directory not found");
+        }
+        catch (UnauthorizedAccessException ex)
+        {
+            throw new Exception("Permission denied");
+        }
+        catch (IOException ex)
+        {
+            throw new Exception("Input/Output error");
+        }
+        catch (Exception ex)
+        {
+            throw new Exception("Something went wrong during saving the picture");
+        }
     }
 }

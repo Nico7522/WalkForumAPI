@@ -60,7 +60,8 @@ internal sealed class GlobalExceptionHandler(IProblemDetailsService problemDetai
         }
         if(exception is Exception)
         {
-            Console.WriteLine(exception.Message);
+            var problemDetails = new ProblemDetails { Status = StatusCodes.Status500InternalServerError, Title = "Something went wronf", Detail = exception.Message, Type = "Server error" };
+            return await problemDetailsService.TryWriteAsync(new ProblemDetailsContext { HttpContext = httpContext, ProblemDetails = problemDetails });
         }
 
             return false;
