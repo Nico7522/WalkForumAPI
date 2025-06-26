@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using WalkForum.Infrastructure.Persistance;
@@ -11,9 +12,11 @@ using WalkForum.Infrastructure.Persistance;
 namespace WalkForum.Infrastructure.Migrations
 {
     [DbContext(typeof(ForumDbContext))]
-    partial class ForumDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250626142221_add_onetomany_userprofile_privatemessages")]
+    partial class add_onetomany_userprofile_privatemessages
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -292,21 +295,11 @@ namespace WalkForum.Infrastructure.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime>("CreationDate")
-                        .HasColumnType("timestamp without time zone");
-
                     b.Property<int>("PrivateDiscussionId")
                         .HasColumnType("integer");
 
-                    b.Property<DateTime>("UpdateDate")
-                        .HasColumnType("timestamp without time zone");
-
                     b.Property<int>("UserProfileId")
                         .HasColumnType("integer");
-
-                    b.Property<string>("text")
-                        .IsRequired()
-                        .HasColumnType("text");
 
                     b.HasKey("Id");
 

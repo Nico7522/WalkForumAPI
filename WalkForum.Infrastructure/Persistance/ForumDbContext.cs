@@ -57,5 +57,11 @@ internal class ForumDbContext(DbContextOptions<ForumDbContext> options) : Identi
             .HasForeignKey(e => e.PrivateDiscussionId)
             .IsRequired();
 
+        modelBuilder.Entity<UserProfile>()
+       .HasMany(e => e.PrivateMessages)
+       .WithOne(e => e.UserProfile)
+       .HasForeignKey(e => e.UserProfileId)
+       .IsRequired();
+
     }
 }

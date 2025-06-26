@@ -41,6 +41,8 @@ public static class ServiceCollectionExtensions
         services.AddScoped<ITagsRepository, TagsRepository>();
         services.AddScoped<IMessagesRepository, MessagesRepository>();
         services.AddScoped<IUserProfileRepository, UserProfileRepository>();
+        services.AddScoped<IPrivateDiscussionRepository, PrivateDiscussionRepository>();
+
 
 
 

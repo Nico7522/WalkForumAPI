@@ -7,6 +7,6 @@ namespace WalkForum.Domain.Repositories;
 public interface IUserProfileRepository : IRepositoryBase
 {
     Task<UserProfile?> GetById(int id);
-
+    Task<UserProfile?> GetByUserId(int id);
     Task UpdateAvatar(string filename, IFormFile file);
 }

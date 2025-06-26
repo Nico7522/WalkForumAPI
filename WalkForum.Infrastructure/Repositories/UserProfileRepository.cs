@@ -14,6 +14,12 @@ internal class UserProfileRepository(ForumDbContext dbContext) : IUserProfileRep
         return await dbContext.UserProfile.FirstOrDefaultAsync(p => p.Id == id);
     }
 
+    public async Task<UserProfile?> GetByUserId(int id)
+    {
+        return await dbContext.UserProfile
+            .FirstOrDefaultAsync(p => p.User.Id == id);
+    }
+
     public async Task SaveChanges()
     {
         await dbContext.SaveChangesAsync();
