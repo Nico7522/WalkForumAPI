@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using WalkForum.Application.PrivateMessages.Commands.CreatePrivateMessage;
+using WalkForum.Application.PrivateMessages.Commands.DeletePrivateMessage;
 using WalkForum.Application.PrivateMessages.Commands.UpdatePrivateMessage;
 
 namespace WalkForum.API.Controllers
@@ -21,6 +22,7 @@ namespace WalkForum.API.Controllers
         }
 
         [HttpPatch]
+        [Authorize]
         public async Task<IActionResult> Update([FromRoute] int privateDiscussionId, [FromBody] UpdatePrivateMessageCommand command)
         {
             command.PrivateDiscussionId = privateDiscussionId;
@@ -28,5 +30,13 @@ namespace WalkForum.API.Controllers
             return NoContent();
         }
 
+        [HttpDelete]
+        [Authorize]
+        public async Task<IActionResult> Delete([FromRoute] int privateDiscussionId, DeletePrivateMessageCommand command)
+        {
+            command.PrivateDiscussionId = privateDiscussionId;
+            await mediator.Send(command);
+            return NoContent();
+        }
     }
 }

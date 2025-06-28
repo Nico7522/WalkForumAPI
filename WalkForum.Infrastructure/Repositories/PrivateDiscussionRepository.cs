@@ -24,7 +24,9 @@ internal class PrivateDiscussionRepository(ForumDbContext dbContext) : IPrivateD
     public Task<PrivateDiscussion?> GetById(int id)
     {
         return dbContext.PrivateDiscussion
-            .Include(d => d.UserProfiles)
+            .Include(d => d.PrivateMessages)
+            .ThenInclude(pm => pm.UserProfile)
+            .ThenInclude(p => p.User)
             .FirstOrDefaultAsync(d => d.Id == id);
     }
 
