@@ -16,7 +16,7 @@ internal class DeletePrivateDiscussionCommandHandler(IPrivateDiscussionRepositor
         if (privateDiscussion is null) throw new NotFoundException("Private discussion not found");
 
         var userProfile = await userProfileRepository.GetByUserId(userContext.GetCurrentUser().Id);
-        if (userProfile is null) throw new NotFoundException("Not authorized");
+        if (userProfile is null) throw new NotFoundException("Profile not found");
 
         if (!privateDiscussion.UserProfiles.Any(up => up.Id == userProfile.Id))
             throw new ForbiddenException("Not Authorized");

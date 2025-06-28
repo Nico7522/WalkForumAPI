@@ -12,6 +12,6 @@ public class UserProfile
     public int UserId { get; set; }
     public User User { get; set; } = default!;
 
-    public List<PrivateDiscussion> PrivateDiscussions { get; } = [];
+    public List<PrivateDiscussion> PrivateDiscussions { get; set; } = new();
     public List<PrivateMessage> PrivateMessages { get; set; } = new();
 }

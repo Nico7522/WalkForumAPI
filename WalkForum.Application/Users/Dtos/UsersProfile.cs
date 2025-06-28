@@ -12,7 +12,7 @@ public class UsersProfile : Profile
     {
         CreateMap<User, UserDto>();
         CreateMap<RegisterCommand, User>()
-            .ForMember(src => src.UserProfile, opt => opt.MapFrom(opt => new { CreationDate = DateTime.Now, UpdateDate = DateTime.Now}));
+            .ForMember(src => src.UserProfile, opt => opt.MapFrom(opt => new Domain.Entities.UserProfile { CreationDate = DateTime.Now, UpdateDate = DateTime.Now }));
         CreateMap<UpdateUserCommand, User>();
     }
 }
