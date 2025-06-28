@@ -4,7 +4,6 @@ namespace WalkForum.Application.PrivateDiscussions.Commands.CreatePrivateDiscuss
 
 public class CreatePrivateDiscussionCommand : IRequest
 {
-    public int SenderId { get; set; }
     public int ReceiverId { get; set; }
-    public string Message { get; set; } = default!;
+    public string Text { get; set; } = default!;
 }
