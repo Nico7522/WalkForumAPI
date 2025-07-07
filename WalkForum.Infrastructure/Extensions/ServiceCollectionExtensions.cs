@@ -31,12 +31,28 @@ public static class ServiceCollectionExtensions
         .AddEntityFrameworkStores<ForumDbContext>()
         .AddSignInManager<CustomSignInManager>()
         .AddDefaultTokenProviders();
-        services.AddTransient<IEmailSender<User>, EmailSender>();
+        //services.AddTransient<IEmailSender<User>, EmailSender>();
         services.ConfigureApplicationCookie(options =>
         {
-            options.ExpireTimeSpan = TimeSpan.FromDays(1); // Durée d'expiration
-            options.SlidingExpiration = true; // Renouvellement automatique
-            options.Cookie.MaxAge = TimeSpan.FromHours(1); // Durée de vie du cookie
+            options.Cookie.Name = "authorization";
+            options.LoginPath = "/login";
+            options.SlidingExpiration = false;
+            options.ExpireTimeSpan = TimeSpan.FromHours(1);
+            options.Cookie.HttpOnly = true;
+            options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
+            options.Cookie.IsEssential = true;
+            options.Cookie.SameSite = SameSiteMode.Strict;
+            options.Events.OnRedirectToLogin = context =>
+            {
+                context.Response.StatusCode = 401; 
+                return Task.CompletedTask;
+            };
+
+            options.Events.OnRedirectToAccessDenied = context =>
+            {
+                context.Response.StatusCode = 403; 
+                return Task.CompletedTask;
+            };
         });
         services.Configure<DataProtectionTokenProviderOptions>(options => options.TokenLifespan = TimeSpan.FromHours(1));
 

@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using WalkForum.Application.Users.Commands.ConfirmAccount;
+using WalkForum.Application.Users.Commands.Login;
 using WalkForum.Application.Users.Commands.Register;
 
 namespace WalkForum.API.Controllers;
@@ -17,10 +18,10 @@ public class AuthController(IMediator mediator) : ControllerBase
     }
 
     [HttpPost("login")]
-    public async Task<IActionResult> Login(RegisterCommand command)
+    public async Task<IActionResult> Login(LoginCommand command)
     {
         await mediator.Send(command);
-        return Created();
+        return NoContent();
     }
 
     [HttpGet("account-confirmation")]

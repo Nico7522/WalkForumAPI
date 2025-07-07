@@ -7,6 +7,7 @@ using WalkForum.Application.Posts.Commands.UpdatePost;
 using WalkForum.Application.Posts.Dtos;
 using WalkForum.Application.Posts.Queries.GetAllPosts;
 using WalkForum.Application.Posts.Queries.GetPostById;
+using WalkForum.Domain.Constants;
 
 namespace WalkForum.API.Controllers;
 
@@ -15,6 +16,7 @@ namespace WalkForum.API.Controllers;
 public class PostsController(IMediator mediator) : ControllerBase
 {
     [HttpGet]
+    [Authorize]
     public async Task<ActionResult<IEnumerable<PostDto>>> GetAll([FromQuery] string category)
     {
             var posts = await mediator.Send(new GetAllPostsQuery(category));

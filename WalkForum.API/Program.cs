@@ -43,7 +43,7 @@ if (app.Environment.IsDevelopment())
 app.UseStaticFiles();
 app.UseHttpsRedirection();
 
-app.MapIdentityApi<User>();
+//app.MapIdentityApi<User>();
 app.UseAuthorization();
 
 app.MapControllers();
