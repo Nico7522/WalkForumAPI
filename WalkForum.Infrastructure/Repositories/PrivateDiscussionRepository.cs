@@ -1,6 +1,4 @@
-﻿
-
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using WalkForum.Domain.Entities;
 using WalkForum.Domain.Repositories;
 using WalkForum.Infrastructure.Persistance;

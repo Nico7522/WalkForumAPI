@@ -1,5 +1,6 @@
 
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Identity;
 using Scalar.AspNetCore;
 using Serilog;
 using WalkForum.API.Extensions;
@@ -42,7 +43,7 @@ if (app.Environment.IsDevelopment())
 app.UseStaticFiles();
 app.UseHttpsRedirection();
 
-app.MapGroup("api/identity").WithTags("identity").MapIdentityApi<User>();
+app.MapIdentityApi<User>();
 app.UseAuthorization();
 
 app.MapControllers();

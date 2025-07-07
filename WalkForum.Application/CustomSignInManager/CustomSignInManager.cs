@@ -38,5 +38,6 @@ namespace WalkForum.Application.CustomSignInManager
 
             return result;
         }
+
     }
 }

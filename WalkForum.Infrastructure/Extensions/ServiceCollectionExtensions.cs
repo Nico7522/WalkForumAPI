@@ -10,6 +10,8 @@ using Microsoft.AspNetCore.Identity;
 using WalkForum.Infrastructure.Authorization;
 using WalkForum.Application.CustomSignInManager;
 using WalkForum.Application.Emails;
+using Microsoft.AspNetCore.Identity.UI.Services;
+using Microsoft.AspNetCore.Http;
 
 
 namespace WalkForum.Infrastructure.Extensions;
@@ -20,7 +22,7 @@ public static class ServiceCollectionExtensions
     {   
         var connectionString = configuration.GetSection("ConnectionString")["WalkForumDB"];
         services.AddDbContext<ForumDbContext>(options => options.UseNpgsql(connectionString).EnableSensitiveDataLogging());
-        services.AddIdentityApiEndpoints<User>(options =>
+        services.AddIdentity<User, IdentityRole<int>>(options =>
         {
             options.User.RequireUniqueEmail = true;
 
@@ -29,8 +31,13 @@ public static class ServiceCollectionExtensions
         .AddEntityFrameworkStores<ForumDbContext>()
         .AddSignInManager<CustomSignInManager>()
         .AddDefaultTokenProviders();
-
-
+        services.AddTransient<IEmailSender<User>, EmailSender>();
+        services.ConfigureApplicationCookie(options =>
+        {
+            options.ExpireTimeSpan = TimeSpan.FromDays(1); // Durée d'expiration
+            options.SlidingExpiration = true; // Renouvellement automatique
+            options.Cookie.MaxAge = TimeSpan.FromHours(1); // Durée de vie du cookie
+        });
         services.Configure<DataProtectionTokenProviderOptions>(options => options.TokenLifespan = TimeSpan.FromHours(1));
 
         services.AddScoped<ICategorySeeder, CategorySeeder>();

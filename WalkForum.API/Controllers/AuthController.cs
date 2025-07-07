@@ -16,6 +16,13 @@ public class AuthController(IMediator mediator) : ControllerBase
         return Created();
     }
 
+    [HttpPost("login")]
+    public async Task<IActionResult> Login(RegisterCommand command)
+    {
+        await mediator.Send(command);
+        return Created();
+    }
+
     [HttpGet("account-confirmation")]
     public async Task<IActionResult> ConfirmAccount([FromQuery] string token, [FromQuery] string email)
     {
