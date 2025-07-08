@@ -1,10 +1,9 @@
-﻿
-
+﻿using FluentValidation;
 using MediatR;
-using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using WalkForum.Application.Abstract;
+using WalkForum.Application.Utilities;
 using WalkForum.Domain.Entities;
 using WalkForum.Domain.Exceptions;
 
@@ -13,10 +12,14 @@ namespace WalkForum.Application.Users.Commands.Login;
 internal class LoginCommandHandler(UserManager<User> userManager,
     SignInManager<User> signInManager,
     IRefreshTokenGenerator refreshTokenGenerator,
-    IHttpContextAccessor httpContextAccessor) : IRequestHandler<LoginCommand>
+    IHttpContextAccessor httpContextAccessor,
+    IValidator<LoginCommand> validator) : IRequestHandler<LoginCommand>
 {
     public async Task Handle(LoginCommand request, CancellationToken cancellationToken)
     {
+
+        Helpers.ValidForm(request, validator);
+
         var user = await userManager.FindByEmailAsync(request.Email);
         if (user is null) throw new BadRequestException("Bad credentials");
 

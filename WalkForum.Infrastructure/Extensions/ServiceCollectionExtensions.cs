@@ -14,6 +14,8 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Http;
 using WalkForum.Infrastructure.Security;
 using WalkForum.Application.Abstract;
+using WalkForum.Infrastructure.Authorization.Services;
+using WalkForum.Domain.AuthorizationInterfaces;
 
 
 namespace WalkForum.Infrastructure.Extensions;
@@ -68,7 +70,7 @@ public static class ServiceCollectionExtensions
         services.AddScoped<IPrivateDiscussionRepository, PrivateDiscussionRepository>();
         services.AddScoped<IPrivateMessageRepository, PrivateMessageRepository>();
         services.AddScoped<IRefreshTokenGenerator, RefreshTokenGenerator>();
-
+        services.AddScoped<IPostAuthorizationService, PostAuthorizationService>();
 
 
 
