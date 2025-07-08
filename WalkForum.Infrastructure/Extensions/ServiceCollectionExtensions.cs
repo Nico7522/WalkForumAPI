@@ -12,6 +12,8 @@ using WalkForum.Application.CustomSignInManager;
 using WalkForum.Application.Emails;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Http;
+using WalkForum.Infrastructure.Security;
+using WalkForum.Application.Abstract;
 
 
 namespace WalkForum.Infrastructure.Extensions;
@@ -31,7 +33,6 @@ public static class ServiceCollectionExtensions
         .AddEntityFrameworkStores<ForumDbContext>()
         .AddSignInManager<CustomSignInManager>()
         .AddDefaultTokenProviders();
-        //services.AddTransient<IEmailSender<User>, EmailSender>();
         services.ConfigureApplicationCookie(options =>
         {
             options.Cookie.Name = "authorization";
@@ -66,7 +67,7 @@ public static class ServiceCollectionExtensions
         services.AddScoped<IUserProfileRepository, UserProfileRepository>();
         services.AddScoped<IPrivateDiscussionRepository, PrivateDiscussionRepository>();
         services.AddScoped<IPrivateMessageRepository, PrivateMessageRepository>();
-
+        services.AddScoped<IRefreshTokenGenerator, RefreshTokenGenerator>();
 
 
 

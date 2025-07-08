@@ -2,13 +2,18 @@
 
 using MediatR;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using WalkForum.Application.Abstract;
 using WalkForum.Domain.Entities;
 using WalkForum.Domain.Exceptions;
 
 namespace WalkForum.Application.Users.Commands.Login;
 
-internal class LoginCommandHandler(UserManager<User> userManager, SignInManager<User> signInManager) : IRequestHandler<LoginCommand>
+internal class LoginCommandHandler(UserManager<User> userManager,
+    SignInManager<User> signInManager,
+    IRefreshTokenGenerator refreshTokenGenerator,
+    IHttpContextAccessor httpContextAccessor) : IRequestHandler<LoginCommand>
 {
     public async Task Handle(LoginCommand request, CancellationToken cancellationToken)
     {
@@ -20,15 +25,18 @@ internal class LoginCommandHandler(UserManager<User> userManager, SignInManager<
 
         await signInManager.PasswordSignInAsync(user, request.Password, request.RememberMe, false);
 
-        if (request.RememberMe)
-        {
-            var authProperties = new AuthenticationProperties
-            {
-                IsPersistent = true,
-                ExpiresUtc = DateTimeOffset.UtcNow.AddDays(3)
-            };
-            await signInManager.SignInAsync(user, authProperties);
 
-        }
+        var resfreshToken = refreshTokenGenerator.GenerateRefreshToken();
+        user.RefreshToken = resfreshToken;
+        user.RefreshTokenExpiresAtDate = DateTime.UtcNow.AddDays(7);
+        await userManager.UpdateAsync(user);
+
+        httpContextAccessor.HttpContext!.Response.Cookies.Append("refreshToken", resfreshToken, new CookieOptions
+        {
+            HttpOnly = true,
+            Expires = DateTime.UtcNow.AddDays(7),
+            Secure = true,
+            SameSite = SameSiteMode.Strict
+        });
     }
 }

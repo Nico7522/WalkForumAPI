@@ -13,27 +13,7 @@ public static class WebApplicationBuilderExtensions
 {
     public static void AddPresentation(this WebApplicationBuilder builder)
     {
-        builder.Services.AddAuthentication().AddCookie();
-
-        // Uncomment the following lines if you want to use cookie authentication and use .AddIdentity insteand of .AddIdentityApiEnpoints
-        //builder.Services.AddAuthentication(options =>
-        //{
-        //    options.DefaultAuthenticateScheme = IdentityConstants.ApplicationScheme;
-        //    options.DefaultChallengeScheme = IdentityConstants.ApplicationScheme;
-        //    options.DefaultSignInScheme = IdentityConstants.ApplicationScheme;
-        //})
-        //.AddCookie("Identity.Bearer", options =>
-        //{
-        //    options.Cookie.Name = "jwt";
-        //    options.LoginPath = "/login";
-        //    options.SlidingExpiration = false;
-        //    options.ExpireTimeSpan = TimeSpan.FromHours(1);
-        //    options.Cookie.HttpOnly = true;
-        //    options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
-        //    options.Cookie.IsEssential = true;
-        //    options.Cookie.SameSite = SameSiteMode.Strict;
-        //    options.Cookie.MaxAge = TimeSpan.FromDays(30);
-        //});
+        builder.Services.AddAuthentication();
 
         builder.Services.TryAddSingleton(TimeProvider.System);
         builder.Services.AddControllers();

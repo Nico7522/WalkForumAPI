@@ -1,11 +1,7 @@
-
-using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Identity;
 using Scalar.AspNetCore;
 using Serilog;
 using WalkForum.API.Extensions;
 using WalkForum.Application.Extensions;
-using WalkForum.Domain.Entities;
 using WalkForum.Infrastructure.Extensions;
 using WalkForum.Infrastructure.Seeders;
 var builder = WebApplication.CreateBuilder(args);
@@ -43,7 +39,6 @@ if (app.Environment.IsDevelopment())
 app.UseStaticFiles();
 app.UseHttpsRedirection();
 
-//app.MapIdentityApi<User>();
 app.UseAuthorization();
 
 app.MapControllers();

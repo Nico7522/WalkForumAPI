@@ -1,7 +1,9 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using WalkForum.Application.Users.Commands.ConfirmAccount;
 using WalkForum.Application.Users.Commands.Login;
+using WalkForum.Application.Users.Commands.RefreshToken;
 using WalkForum.Application.Users.Commands.Register;
 
 namespace WalkForum.API.Controllers;
@@ -29,6 +31,14 @@ public class AuthController(IMediator mediator) : ControllerBase
     {
 
         await mediator.Send(new ConfirmAccountCommand(email, token));
+        return NoContent();
+    }
+
+    [HttpPost("refresh")]
+    public async Task<IActionResult> Refresh()
+    {
+
+        await mediator.Send(new RefreshTokenCommand());
         return NoContent();
     }
 
