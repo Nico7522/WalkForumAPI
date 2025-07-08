@@ -23,7 +23,7 @@ internal class LoginCommandHandler(UserManager<User> userManager,
         var isPasswordCorrect = await userManager.CheckPasswordAsync(user, request.Password);
         if (!isPasswordCorrect) throw new BadRequestException("Bad credentials");
 
-        await signInManager.PasswordSignInAsync(user, request.Password, request.RememberMe, false);
+        await signInManager.PasswordSignInAsync(user, request.Password, false, false);
 
 
         var resfreshToken = refreshTokenGenerator.GenerateRefreshToken();
