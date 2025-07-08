@@ -2,6 +2,7 @@
 using MediatR;
 using Microsoft.Extensions.Logging;
 using WalkForum.Application.Users;
+using WalkForum.Domain.AuthorizationInterfaces;
 using WalkForum.Domain.Constants;
 using WalkForum.Domain.Exceptions;
 using WalkForum.Domain.Repositories;
@@ -11,7 +12,7 @@ namespace WalkForum.Application.Messages.Commands.DeleteMessage;
 public class DeleteMessageForPostCommandHandler(ILogger<DeleteMessageForPostCommandHandler> logger, 
     IPostsRepository postsRepository,
     IMessagesRepository messagesRepository,
-    IUserContext userContext
+    IMessageAuthorizationService messageAuthorizationService
     ) : IRequestHandler<DeleteMessageForPostCommand>
 {
     public async Task Handle(DeleteMessageForPostCommand request, CancellationToken cancellationToken)
@@ -27,8 +28,9 @@ public class DeleteMessageForPostCommandHandler(ILogger<DeleteMessageForPostComm
 
         if (message.PostId != post.Id) throw new BadRequestException("Message not in this post");
 
-        if (message.UserId != userContext.GetCurrentUser().Id && !userContext.GetCurrentUser().IsInRole(UserRoles.Administrator) && !userContext.GetCurrentUser().IsInRole(UserRoles.Moderator)) throw new ForbiddenException("Not authorized");
-        
+        if(!messageAuthorizationService.Authorize(message, ResourceOperation.Delete))
+            throw new UnauthorizedException("You are not authorized");
+
         await messagesRepository.Delete(message);
 
     }

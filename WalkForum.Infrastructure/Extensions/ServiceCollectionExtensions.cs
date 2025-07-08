@@ -59,6 +59,7 @@ public static class ServiceCollectionExtensions
         });
         services.Configure<DataProtectionTokenProviderOptions>(options => options.TokenLifespan = TimeSpan.FromHours(1));
 
+        // Repositories
         services.AddScoped<ICategorySeeder, CategorySeeder>();
         services.AddScoped<ITagSeeder, TagSeeder>();
         services.AddScoped<IRoleSeeder, RoleSeeder>();
@@ -69,11 +70,19 @@ public static class ServiceCollectionExtensions
         services.AddScoped<IUserProfileRepository, UserProfileRepository>();
         services.AddScoped<IPrivateDiscussionRepository, PrivateDiscussionRepository>();
         services.AddScoped<IPrivateMessageRepository, PrivateMessageRepository>();
+
+        // Authentication and Authorization Services
         services.AddScoped<IRefreshTokenGenerator, RefreshTokenGenerator>();
+
+        // Resource Authorization Services
         services.AddScoped<IPostAuthorizationService, PostAuthorizationService>();
+        services.AddScoped<IMessageAuthorizationService, MessageAuthorizationService>();
+        services.AddScoped<IUserProfileAuthorizationService, UserProfileAuthorizationService>();
 
 
 
+
+        // Email Service
         var emailSettings = configuration.GetSection("EmailSettings");
         var defaultFromEmail = emailSettings["DefaultFromEmail"];
         var host = emailSettings["SMTPSetting:Host"];

@@ -5,18 +5,17 @@ using WalkForum.Domain.Entities;
 
 namespace WalkForum.Infrastructure.Authorization.Services;
 
-public class PostAuthorizationService(IUserContext userContext) : IPostAuthorizationService
+internal class PostAuthorizationService(IUserContext userContext) : IPostAuthorizationService
 {
-    public bool Authorize(Post post, ResourceOperation resourceOperation)
+    public bool Authorize(Post entity, ResourceOperation resourceOperation)
     {
         var user = userContext.GetCurrentUser();
 
         return resourceOperation switch
         {
-            ResourceOperation.Delete => user.Id == post.AuthorId || user.IsInRole(UserRoles.Administrator) || user.IsInRole(UserRoles.Moderator),
-            ResourceOperation.Update => user.Id == post.AuthorId ? true : false,
+            ResourceOperation.Delete => user.Id == entity.AuthorId || user.IsInRole(UserRoles.Administrator) || user.IsInRole(UserRoles.Moderator),
+            ResourceOperation.Update => user.Id == entity.AuthorId ? true : false,
             _ => false
         };
-
     }
 }

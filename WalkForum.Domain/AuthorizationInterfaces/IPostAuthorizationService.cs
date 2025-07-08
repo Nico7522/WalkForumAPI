@@ -3,7 +3,6 @@ using WalkForum.Domain.Entities;
 
 namespace WalkForum.Domain.AuthorizationInterfaces;
 
-public interface IPostAuthorizationService 
+public interface IPostAuthorizationService : IAuthorizationBase<Post>
 {
-    bool Authorize(Post post, ResourceOperation resourceOperation);
 }

@@ -1,20 +1,22 @@
 ﻿using MediatR;
-using WalkForum.Application.Users;
+using WalkForum.Domain.AuthorizationInterfaces;
 using WalkForum.Domain.Constants;
 using WalkForum.Domain.Exceptions;
 using WalkForum.Domain.Repositories;
 
 namespace WalkForum.Application.UserProfile.Commands.UpdateAvatarUserProfile;
 
-internal class UpdateAvatarUserProfileCommandHandler(IUserProfileRepository userProfileRepository,
-    IUserContext userContext) : IRequestHandler<UpdateAvatarUserProfileCommand>
+internal class UpdateAvatarUserProfileCommandHandler(
+    IUserProfileRepository userProfileRepository,
+    IUserProfileAuthorizationService userProfileAuthorizationService) : IRequestHandler<UpdateAvatarUserProfileCommand>
 {
     public async Task Handle(UpdateAvatarUserProfileCommand request, CancellationToken cancellationToken)
     {
         var userProfile = await userProfileRepository.GetById(request.ProfileId);
         if (userProfile is null) throw new NotFoundException("Profile not found");
 
-        if (userContext.GetCurrentUser().Id != userProfile.UserId && !userContext.GetCurrentUser().IsInRole(UserRoles.Administrator)) throw new ForbiddenException("Not authorized");
+        if(!userProfileAuthorizationService.Authorize(userProfile, ResourceOperation.Update))
+            throw new ForbiddenException("Not Authorized");
 
         List<string> validExtentions = new List<string>() {".jpg", ".png", ".jpeg" };
         string extention = Path.GetExtension(request.File.FileName);
