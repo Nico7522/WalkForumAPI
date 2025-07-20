@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using Asp.Versioning;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WalkForum.Application.PrivateDiscussions.Commands.CreatePrivateDiscussion;
@@ -8,6 +9,7 @@ using WalkForum.Application.PrivateDiscussions.Queries.GetPrivateDiscussionById;
 
 namespace WalkForum.API.Controllers
 {
+    [ApiVersion(1)]
     [Route("api/private-discussions")]
     [ApiController]
     public class PrivateDiscussionsController(IMediator mediator) : ControllerBase

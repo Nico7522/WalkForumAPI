@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using Asp.Versioning;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WalkForum.Application.Posts.Commands.CreatePost;
@@ -10,7 +11,7 @@ using WalkForum.Application.Posts.Queries.GetPostById;
 using WalkForum.Domain.Constants;
 
 namespace WalkForum.API.Controllers;
-
+[ApiVersion(1)]
 [ApiController]
 [Route("api/posts")]
 public class PostsController(IMediator mediator) : ControllerBase

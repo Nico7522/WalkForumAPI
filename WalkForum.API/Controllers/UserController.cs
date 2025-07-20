@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using Asp.Versioning;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WalkForum.Application.Users.Commands.AssignUserRole;
@@ -11,6 +12,7 @@ using WalkForum.Domain.Constants;
 
 namespace WalkForum.API.Controllers
 {
+    [ApiVersion(1)]
     [Route("api/[controller]")]
     [ApiController]
     public class UserController(IMediator mediator) : ControllerBase

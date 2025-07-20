@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using Asp.Versioning;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -8,6 +9,7 @@ using WalkForum.Application.PrivateMessages.Commands.UpdatePrivateMessage;
 
 namespace WalkForum.API.Controllers
 {
+    [ApiVersion(1)]
     [Route("api/private-discussions/{privateDiscussionId}/private-messages")]
     [ApiController]
     public class PrivateMessagesController(IMediator mediator) : ControllerBase

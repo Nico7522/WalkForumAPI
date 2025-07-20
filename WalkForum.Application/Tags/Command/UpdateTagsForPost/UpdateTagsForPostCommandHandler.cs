@@ -16,7 +16,7 @@ internal class UpdateTagsForPostCommandHandler(ITagsRepository tagsRepository,
         var post = await postsRepository.GetById(request.PostId);
         if (post is null) throw new NotFoundException("Post not found");
 
-        if(!postAuthorizationService.Authorize(ResourceOperation.Update, post))
+        if(!postAuthorizationService.Authorize(post, ResourceOperation.Update))
             throw new ForbiddenException("Not Authorized");
 
         var tags = new List<Tag>();

@@ -1,10 +1,12 @@
-﻿using MediatR;
+﻿using Asp.Versioning;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using WalkForum.Application.UserProfile.Commands.UpdateAvatarUserProfile;
 using WalkForum.Application.UserProfile.Commands.UpdateUserProfileCommand;
 
 namespace WalkForum.API.Controllers
 {
+    [ApiVersion(1)]
     [Route("api/user/profile")]
     [ApiController]
     public class ProfileController(IMediator mediator) : ControllerBase

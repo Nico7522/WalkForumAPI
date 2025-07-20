@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using Asp.Versioning;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -7,7 +8,7 @@ using WalkForum.Domain.Constants;
 
 namespace WalkForum.API.Controllers
 {
-
+    [ApiVersion(1)]
     [Route("api/posts/{postId}/tags")]
     [ApiController]
     public class TagsController(IMediator mediator) : ControllerBase

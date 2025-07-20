@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using Asp.Versioning;
+using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using WalkForum.Application.Users.Commands.ConfirmAccount;
@@ -8,6 +9,7 @@ using WalkForum.Application.Users.Commands.Register;
 
 namespace WalkForum.API.Controllers;
 
+[ApiVersion(1)]
 [ApiController]
 [Route("api/auth")]
 public class AuthController(IMediator mediator) : ControllerBase

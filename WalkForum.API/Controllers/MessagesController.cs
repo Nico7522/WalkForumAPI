@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using Asp.Versioning;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WalkForum.Application.Messages.Commands.CreateMessage;
@@ -9,6 +10,7 @@ using WalkForum.Application.Messages.Queries.GetMessagesForPost;
 
 namespace WalkForum.API.Controllers;
 
+[ApiVersion(1)]
 [Route("api/posts/{postId}/messages")]
 [ApiController]
 public class MessagesController(IMediator mediator) : ControllerBase
