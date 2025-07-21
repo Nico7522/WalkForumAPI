@@ -17,7 +17,6 @@ namespace WalkForum.API.Controllers;
 public class PostsController(IMediator mediator) : ControllerBase
 {
     [HttpGet]
-    [Authorize]
     public async Task<ActionResult<IEnumerable<PostDto>>> GetAll([FromQuery] string category)
     {
             var posts = await mediator.Send(new GetAllPostsQuery(category));
@@ -44,7 +43,6 @@ public class PostsController(IMediator mediator) : ControllerBase
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
-    //[TypeFilter(typeof(CanDeleteAuthorizationFilter))]
     [Authorize]
     public async Task<IActionResult> Delete([FromRoute] int id)
     {

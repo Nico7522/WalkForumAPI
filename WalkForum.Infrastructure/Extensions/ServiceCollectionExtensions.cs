@@ -16,6 +16,12 @@ using WalkForum.Infrastructure.Security;
 using WalkForum.Application.Abstract;
 using WalkForum.Infrastructure.Authorization.Services;
 using WalkForum.Domain.AuthorizationInterfaces;
+using Microsoft.AspNetCore.Authentication;
+using System.Text.Json;
+using Microsoft.AspNetCore.Mvc;
+using System.Net.Http;
+using System;
+using WalkForum.Domain.Exceptions;
 
 
 namespace WalkForum.Infrastructure.Extensions;
@@ -45,10 +51,26 @@ public static class ServiceCollectionExtensions
             options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
             options.Cookie.IsEssential = true;
             options.Cookie.SameSite = SameSiteMode.Strict;
-            options.Events.OnRedirectToLogin = context =>
+            options.Events.OnRedirectToLogin = async context =>
             {
-                context.Response.StatusCode = 401; 
-                return Task.CompletedTask;
+                var problemDetailsService = context.HttpContext.RequestServices
+                    .GetRequiredService<IProblemDetailsService>();
+
+                var problemDetails = new ProblemDetails
+                {
+                    Status = StatusCodes.Status401Unauthorized,
+                    Title = "Unauthorized",
+                    Detail = "Token not valid",
+                    Type = "Unauthorized"
+                };
+
+                context.Response.StatusCode = StatusCodes.Status401Unauthorized;
+
+                await problemDetailsService.TryWriteAsync(new ProblemDetailsContext
+                {
+                    HttpContext = context.HttpContext,
+                    ProblemDetails = problemDetails
+                });
             };
 
             options.Events.OnRedirectToAccessDenied = context =>
